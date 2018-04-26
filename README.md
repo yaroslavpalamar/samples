@@ -1,1 +1,2 @@
-# samples
+# C and C++ samples
+
