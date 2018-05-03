@@ -17,6 +17,8 @@ class List {
         int getSize(){return size;}
     
         T& operator[] (const int index);
+        void pop_front();
+        void clear();
     
     private:
         template <typename B>
@@ -43,6 +45,7 @@ List<T>::List() {
 
 template <typename T>
 List<T>::~List() {   
+    clear();
 }
 
 template <typename T>
@@ -74,6 +77,22 @@ T& List<T>::operator[] (const int index) {
     }
 }
 
+template <typename T>
+void List<T>::pop_front() {
+    Node<T> *tmp = this->head;
+    head = tmp->pNext;
+    delete tmp;
+    size--;
+}
+
+
+template<typename T>
+void List<T>::clear() {
+    while (size) {
+        pop_front();
+    }
+}
+
 int main() {
     List<int> lst;
     lst.push_back(1);
@@ -85,6 +104,15 @@ int main() {
     
     // check how work operator [] 
     cout << "by index 2 you data = " << lst[2] << endl;
+    
+    // remove first node from linked list
+    lst.pop_front();
+    
+    // check the size of linked list after removing
+    cout << "size of linked list after pop_front " << lst.getSize() << endl;
+    
+    lst.clear();
+    cout << "size of linked list after method clear() " << lst.getSize() << endl;
     
     // push_back randomly 10 numbers inside list (from 0 to 10)
     int numberCount = 10 ;
