@@ -5,6 +5,14 @@ using namespace std;
 push_back()
 getSize()
 operator []
+
+pop_front();
+void clear();
+    
+push_front(T data);
+insert(int index, T val);
+removeAt(int index);
+pop_back();
 */
 
 template <typename T>
