@@ -1,7 +1,6 @@
 #include <iostream>
 #include <list>
 #include <vector>
-#include <stack>
 
 using namespace std;
 
@@ -27,6 +26,29 @@ public:
 		adjLst[v].push_back(w);
 	}
 	void BFS (int startVert) {
+		// vector for marking visited vertices
+		// on the begining they are all marked as not visited
+		vector<int>visited(vertexNum,false);
+
+		list<int> queue;
+		visited[startVert]=true;
+		queue.push_back(startVert);
+		
+		// tmp value which contain all adjacency list values from one vertex.
+		list<int>::iterator allAdjOfVert;
+		while(!queue.empty()) {
+			// get vertex from queue and print it
+			startVert = queue.front();
+			cout << startVert << " ";
+			queue.pop_front();
+
+			for (list<int>::iterator i = adjLst[startVert].begin(); i != adjLst[startVert].end(); ++i) {
+				if (!visited[*i]){
+					queue.push_back(*i);
+					visited[*i] = true;
+				}
+			}
+		}
 	}
 	void printAdjLists(int vertexNum);
 };
@@ -48,20 +70,29 @@ Graph::printAdjLists(int vertexNum)
 int
 main (int argc, char** argv)
 {
-	const int VERT_NUM = 5;
+	const int VERT_NUM = 8;
 	Graph g(VERT_NUM);
-	g.addEdge(0, 1); 
-	g.addEdge(0, 4); 
-	g.addEdge(1, 2);
-	g.addEdge(1, 3); 
+	g.addEdge(0, 7); 
+	g.addEdge(1, 2); 
+	g.addEdge(1, 3);
 	g.addEdge(1, 4); 
+	g.addEdge(1, 6); 
 	g.addEdge(2, 3);
-	g.addEdge(3, 4);
+	g.addEdge(3, 2);
+	g.addEdge(4, 3);
+	g.addEdge(4, 5);
 
 	g.printAdjLists(VERT_NUM);	
 	
 	cout << "\nBFS print:" << endl;
-	//g.BFS(0);
+	cout <<"\ntest 1: start from 0:" <<endl;
+	g.BFS(0);
+	cout <<"\ntest 2: start from 2:" <<endl;
+	g.BFS(2);
+	cout <<"\ntest 3: start from 3:" <<endl;
+	g.BFS(3);
+	cout <<"\ntest 4: start from 4:" <<endl;
+	g.BFS(4);
 
 	return 0;
 }

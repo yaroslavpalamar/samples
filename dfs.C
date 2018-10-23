@@ -75,21 +75,31 @@ Graph::printAdjLists(int vertexNum)
 int
 main (int argc, char** argv)
 {
-	const int VERT_NUM = 5;
-	Graph g(VERT_NUM);
-	g.addEdge(0, 1); 
-	g.addEdge(0, 4); 
-	g.addEdge(1, 2);
-	g.addEdge(1, 3); 
-	g.addEdge(1, 4); 
-	g.addEdge(2, 3);
-	g.addEdge(3, 4);
+        const int VERT_NUM = 8;
+        Graph g(VERT_NUM);
+        g.addEdge(0, 7);
+        g.addEdge(1, 2);
+        g.addEdge(1, 3);
+        g.addEdge(1, 4);
+        g.addEdge(1, 6);
+        g.addEdge(2, 3);
+        g.addEdge(3, 2);
+        g.addEdge(4, 3);
+	g.addEdge(4, 5);
 
-	g.printAdjLists(VERT_NUM);	
-	
-	cout << "\nDFS print:" << endl;
-	g.DFS(0);
+        g.printAdjLists(VERT_NUM);
 
-	return 0;
+        cout << "\nDFS print:" << endl;
+        cout <<"\ntest 1: start from 0:" <<endl;
+        g.DFS(0);
+        cout <<"\ntest 2: start from 2:" <<endl;
+        g.DFS(2);
+        cout <<"\ntest 3: start from 3:" <<endl;
+        g.DFS(3);
+        cout <<"\ntest 4: start from 4:" <<endl;
+        g.DFS(4);
+
+        return 0;
+
 }
 
