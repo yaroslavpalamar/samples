@@ -34,8 +34,6 @@ public:
 		visited[startVert]=true;
 		queue.push_back(startVert);
 		
-		// tmp value which contain all adjacency list values from one vertex.
-		list<int>::iterator allAdjOfVert;
 		while(!queue.empty()) {
 			// get vertex from queue and print it
 			startVert = queue.front();
