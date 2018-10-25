@@ -1,6 +1,7 @@
 #include <iostream>
 #include <list>
 #include <vector>
+#include <queue>
 
 using namespace std;
 
@@ -14,40 +15,59 @@ using namespace std;
 class Graph {
 	int vertexNum;
 	// pointer to adjacency list
-	list <int>*adjLst;
+	list <pair<int, int>>*adjLst;
 public:
 	Graph(int vertNum) 
 	{ 
 		this->vertexNum = vertNum; 
-		adjLst = new list<int>[vertNum]; 
+		adjLst = new list<pair<int, int>>[vertNum]; 
 	} 
-	void addEdge(int v, int w)
+	void addEdge(int v1, int v2, int w)
 	{
-		adjLst[v].push_back(w);
+		adjLst[v1].push_back(make_pair(v2, w));
+		// for creation unordered graph
+		adjLst[v2].push_back(make_pair(v1, w));
 	}
 	void dijkstraShortPath (int startVert) {
-		// vector for marking visited vertices
-		// on the begining they are all marked as not visited
-		vector<int>visited(vertexNum,false);
-
-		list<int> queue;
-		visited[startVert]=true;
-		queue.push_back(startVert);
+		// priority queue for storing preporcessed vertices.
+		priority_queue<pair<int, int>, vector<pair<int,int>>, greater<pair<int,int>>> pq;
+	
+		// vector initialized by INFINITY for distances
+		const int INF=0xfffffff;
+		vector<int> dist(vertexNum, INF);
 		
-		while(!queue.empty()) {
-			// get vertex from queue and print it
-			startVert = queue.front();
-			cout << startVert << " ";
-			queue.pop_front();
+		// put first element to the priority queue
+		pq.push(make_pair(0, startVert));
+		// distance to first element initialized as 0.
+		dist[startVert] = 0;
+		
+		// Go through priority queue untill queue become empty 
+		// or all distances will be passed
+		while(!pq.empty()) {
+			// Go to the next element in adj list.
+			int next = pq.top().second; 
+			pq.pop();
+			for (list<pair<int, int>>::iterator i = adjLst[next].begin(); 
+			i != adjLst[next].end(); ++i) {
+				int vert=(*i).first;
+				int weight = (*i).second;
 
-			for (list<int>::iterator i = adjLst[startVert].begin(); i != adjLst[startVert].end(); ++i) {
-				if (!visited[*i]){
-					queue.push_back(*i);
-					visited[*i] = true;
+				// if path is shourter to vert throuhg "next"
+				if (dist[vert] > dist[next] + weight) {
+					// update distance to vertex
+					dist[vert] = dist[next] + weight;
+					pq.push(make_pair(dist[vert],vert));
 				}
 			}
 		}
+		
+		cout <<"Distances from " << startVert << " to: " << endl;
+		for (int i = 0; i < vertexNum; ++i) {
+			cout << i << "=" << dist[i] << endl;
+		}
+		
 	}
+
 	void printAdjLists(int vertexNum);
 };
 
@@ -55,11 +75,14 @@ public:
 void
 Graph::printAdjLists(int vertexNum) 
 {
+	cout << "\nAdjacency list:\n";
 	for (int v = 0; v < vertexNum; ++v) 
 	{ 
-		cout << "\n Adjacency list of: (head " << v << ")"; 
-		for (int node : adjLst[v]) {
-			cout << "->" << node; 
+		cout << "Head:" << v << ": "; 
+		int head = v;
+		for (pair<int, int> node : adjLst[v]) {
+			cout << v;
+			cout << "->" << node.first << "=" << node.second <<"; "; 
 		}
 		cout<<endl; 
 	}
@@ -68,30 +91,31 @@ Graph::printAdjLists(int vertexNum)
 int
 main (int argc, char** argv)
 {
-	const int VERT_NUM = 9;
+	const int VERT_NUM = 7;
 	Graph g(VERT_NUM);
-	g.addEdge(0, 7); 
-	g.addEdge(1, 2); 
-	g.addEdge(1, 3);
-	g.addEdge(1, 4); 
-	g.addEdge(1, 6); 
-	g.addEdge(2, 3);
-	g.addEdge(3, 2);
-	g.addEdge(4, 3);
-	g.addEdge(4, 5);
+	g.addEdge(0, 1, 7);
+	g.addEdge(0, 3, 5);
+	g.addEdge(1, 3, 9);
+	g.addEdge(1, 2, 8);
+	g.addEdge(1, 4, 7);
+	g.addEdge(3, 4, 15);
+	g.addEdge(3, 5, 6);
+	g.addEdge(5, 4, 8);
+	g.addEdge(5, 6, 11);
+	g.addEdge(4, 6, 9);
 
 	g.printAdjLists(VERT_NUM);	
-/*	
-	cout << "\nDijkstra Shortest path print:" << endl;
-	cout <<"\ntest 1: start from 0:" <<endl;
+	
+	cout << "\nDijkstra Shortest path print:";
+	cout <<"\nTest 1:" <<endl;
 	g.dijkstraShortPath(0);
-	cout <<"\ntest 2: start from 2:" <<endl;
+	cout <<"\nTest 2:" <<endl;
 	g.dijkstraShortPath(2);
-	cout <<"\ntest 3: start from 3:" <<endl;
+	cout <<"\nTest 3:" <<endl;
 	g.dijkstraShortPath(3);
-	cout <<"\ntest 4: start from 4:" <<endl;
+	cout <<"\nTest 4:" <<endl;
 	g.dijkstraShortPath(4);
-*/
+
 	return 0;
 }
 
