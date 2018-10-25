@@ -9,6 +9,7 @@ using namespace std;
  *
  * Part of code to display graph represented by adjacency list 
  * and Dijkstra algorithm based on priority queue to traverse the graph and search for shortest path. 
+ * Complexity O(ElogV)) because O(E) vertices in priority_queue and O(log E) is same as O(log V)
  *
  * */
 
@@ -47,9 +48,9 @@ public:
 			// Go to the next element in adj list.
 			int next = pq.top().second; 
 			pq.pop();
-			for (list<pair<int, int>>::iterator i = adjLst[next].begin(); 
-			i != adjLst[next].end(); ++i) {
-				int vert=(*i).first;
+			for (list<pair<int, int>>::iterator i = adjLst[next].begin(); i != adjLst[next].end();
+				   ++i) {
+				int vert = (*i).first;
 				int weight = (*i).second;
 
 				// if path is shourter to vert throuhg "next"
