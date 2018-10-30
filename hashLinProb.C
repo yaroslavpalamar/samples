@@ -54,7 +54,7 @@ public:
 			this->arr[i]=NULL;
                         if (other.arr[i]!=NULL && other.arr[i]->key!=-1) {
 				HashNode<K,V> *temp = new HashNode<K,V>(other.arr[i]->key, other.arr[i]->value);
-				this->arr[i]=temp;
+				this->insertNode(temp->key, temp->value);
                         }
                 }
 		return *this;
@@ -79,7 +79,7 @@ public:
 		for (int i=0; i <other.hashTableMaxSize; ++i ) {
 			if (other.arr[i]!=NULL && other.arr[i]->key!=-1) {
                                 HashNode<K,V> *temp = new HashNode<K,V>(other.arr[i]->key, other.arr[i]->value);
-                                this->arr[i]=temp;
+				this->insertNode(temp->key, temp->value);
                         }
 		}
 	}
@@ -101,7 +101,7 @@ public:
 			&& arr[hashIndex]->key != -1) 
 		{
 			hashIndex++; 
-			hashIndex = hashCode(hashIndex); 
+			hashIndex = hashCode(hashIndex);
 		}
           
 		//if new node to be inserted increase the current size 
@@ -110,8 +110,8 @@ public:
 		arr[hashIndex] = temp; 
 
 		// double table size if 50% full
-		//if (actualSize >= hashTableMaxSize/2)
-			//resize(2*hashTableMaxSize);
+		if (actualSize >= hashTableMaxSize/2)
+			resize(2*hashTableMaxSize);
 	}
       
 	V deleteNode(int key) 
@@ -133,7 +133,7 @@ public:
 				return temp->value; 
 			}
 			hashIndex++; 
-			hashIndex %= hashTableMaxSize; 
+			hashIndex = hashCode(hashIndex);
 		}
 		return -1;
 	}
@@ -153,7 +153,7 @@ public:
 			if(arr[hashIndex]->key == key) 
 				return arr[hashIndex]->value; 
 			hashIndex++; 
-			hashIndex %= hashTableMaxSize; 
+			hashIndex = hashCode(hashIndex); 
 		}
 		return -1;
 	}
@@ -169,13 +169,6 @@ public:
 	} 
 	
 	void resize (int newMaxTableSize) {
-		HashNode<int,int> *tmp[newMaxTableSize];
-		for (int i = 0; i < hashTableMaxSize; ++i) {
-			if (arr[i]!=NULL && arr[i]->key!=-1) {
-				//tmp[i] = new HashNode<int,int>(arr[i]->key, arr[i]->value);
-				//delete arr[i];
-			}
-		}
 	}
       
 	void printHashMapData() 
@@ -192,11 +185,12 @@ public:
 
 int main (int argc, char** argv) 
 {
-	HashMap<int, int> copyTest(6);
-
-	HashMap<int, int> operatorTest(5); 
-	copyTest = operatorTest;
-	HashMap<int, int> h = copyTest;
+	//HashMap<int, int> copyTest(7);
+	//HashMap<int, int> operatorTest(6); 
+	//copyTest = operatorTest;
+	//HashMap<int, int> h = copyTest;
+	
+	HashMap<int, int> h(5);
 	
 	h.insertNode(1,1);
 	h.insertNode(2,2); 
@@ -205,13 +199,14 @@ int main (int argc, char** argv)
 	h.insertNode(4,4); 
 	h.printHashMapData();
 	
-	cout << h.sizeofMap() <<endl; 
-	cout << h.deleteNode(2) << endl; 
-	cout << h.sizeofMap() <<endl; 
-	cout << h.isEmpty() << endl; 
-	cout << h.get(2);
-	
-	cout << "print after deletion:" << endl;
+	cout << "Size Of Map:" << h.sizeofMap() <<endl; 
+	cout << "Deleted node:" << h.deleteNode(2) << endl; 
+	cout << "Size of Map:" << h.sizeofMap() <<endl; 
+	cout << "Check if empty map:" << h.isEmpty() << endl; 
+	cout << "Get index 2:" << h.get(2) << endl;
+	cout << "Get index 7:" << h.get(7) << endl;	
+
+	cout << "\nprint after deletion:" << endl;
 	h.printHashMapData();
 	return 0;
 }
