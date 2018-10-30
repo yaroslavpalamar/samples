@@ -23,7 +23,7 @@ class HashMap
 	HashNode<K,V> **arr;
 	HashNode<K,V> *dummy;
 public:
-	HashMap(int hashTableMaxSize) 
+	explicit HashMap(int hashTableMaxSize) 
 	{ 
         	this->hashTableMaxSize = hashTableMaxSize; 
 		actualSize=0; 
@@ -33,6 +33,55 @@ public:
 			arr[i] = NULL; 
           
 		dummy = new HashNode<K,V>(-1, -1); 
+	}
+	
+	HashMap<K,V>& operator = (const HashMap<K,V>& other) 
+	{
+		//delete previous objects
+		delete this->dummy;
+		this->dummy=NULL;
+		for (int i=0; i < hashTableMaxSize; ++i ) {
+			if (this->arr[i]!=NULL && this->arr[i]->key!=-1)
+				delete this->arr[i];
+		}
+		this->actualSize=other.actualSize;
+		this->hashTableMaxSize=other.hashTableMaxSize;
+		delete [] this->arr;
+		// create new array with save of source obj
+                this->arr = new HashNode<K,V>*[this->hashTableMaxSize];
+		this->dummy = new HashNode<K,V>(-1,-1);
+                for (int i=0; i <other.hashTableMaxSize; ++i ) {
+			this->arr[i]=NULL;
+                        if (other.arr[i]!=NULL && other.arr[i]->key!=-1) {
+				HashNode<K,V> *temp = new HashNode<K,V>(other.arr[i]->key, other.arr[i]->value);
+				this->arr[i]=temp;
+                        }
+                }
+		return *this;
+	}
+
+	~HashMap()
+	{
+		cout << "destructor" << endl; 
+		for(int i=0 ; i < hashTableMaxSize ; i++) {
+			if (arr[i]!=NULL&&arr[i]->key!=-1)
+				delete arr[i];
+		}
+		delete dummy;
+		delete [] arr;
+	}
+
+	HashMap(const HashMap &other) {
+		this->actualSize=other.actualSize;
+		this->hashTableMaxSize=other.hashTableMaxSize;
+		this->dummy = new HashNode<K,V>(-1, -1);
+		this->arr= new HashNode<K,V>*[other.hashTableMaxSize];
+		for (int i=0; i <other.hashTableMaxSize; ++i ) {
+			if (other.arr[i]!=NULL && other.arr[i]->key!=-1) {
+                                HashNode<K,V> *temp = new HashNode<K,V>(other.arr[i]->key, other.arr[i]->value);
+                                this->arr[i]=temp;
+                        }
+		}
 	}
 	
 	int hashCode(K key) 
@@ -61,8 +110,8 @@ public:
 		arr[hashIndex] = temp; 
 
 		// double table size if 50% full
-		if (actualSize >= hashTableMaxSize/2)
-			resize(2*hashTableMaxSize);
+		//if (actualSize >= hashTableMaxSize/2)
+			//resize(2*hashTableMaxSize);
 	}
       
 	V deleteNode(int key) 
@@ -86,30 +135,27 @@ public:
 			hashIndex++; 
 			hashIndex %= hashTableMaxSize; 
 		}
-		// if not found return null 
-		return NULL; 
+		return -1;
 	}
       
 	V get(int key) 
 	{
 		// Apply hash function to find index for given key 
 		int hashIndex = hashCode(key); 
-		int counter=0; 
 		
 		//finding the node with given key    
 		while(arr[hashIndex] != NULL) 
 		{    
 			int counter =0; 
 			if(counter++>hashTableMaxSize)  //to avoid infinite loop 
-				return NULL;         
+				return -1;         
 			//if node found return its value 
 			if(arr[hashIndex]->key == key) 
 				return arr[hashIndex]->value; 
 			hashIndex++; 
 			hashIndex %= hashTableMaxSize; 
 		}
-		// if not found return null 
-		return NULL; 
+		return -1;
 	}
       
 	int sizeofMap() 
@@ -123,7 +169,13 @@ public:
 	} 
 	
 	void resize (int newMaxTableSize) {
-		//HashMap<int, int> temp(newMaxTableSize);
+		HashNode<int,int> *tmp[newMaxTableSize];
+		for (int i = 0; i < hashTableMaxSize; ++i) {
+			if (arr[i]!=NULL && arr[i]->key!=-1) {
+				//tmp[i] = new HashNode<int,int>(arr[i]->key, arr[i]->value);
+				//delete arr[i];
+			}
+		}
 	}
       
 	void printHashMapData() 
@@ -140,7 +192,12 @@ public:
 
 int main (int argc, char** argv) 
 {
-	HashMap<int, int> h(5);
+	HashMap<int, int> copyTest(6);
+
+	HashMap<int, int> operatorTest(5); 
+	copyTest = operatorTest;
+	HashMap<int, int> h = copyTest;
+	
 	h.insertNode(1,1);
 	h.insertNode(2,2); 
 	h.insertNode(7,7);
