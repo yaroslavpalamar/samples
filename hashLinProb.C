@@ -22,14 +22,23 @@ class HashMap
 	int actualSize;
 	HashNode<K,V> **arr;
 	HashNode<K,V> *dummy;
+	void checkIfMapSizeLessThenAllowed(const int& hashTableMaxSize, int& newSize) 
+	{
+		// if size is 1 for example then we don't have NULL pointer in the end of array
+		const int MIN_ARR_MAP_SIZE = 2;
+		if (hashTableMaxSize<2)
+			newSize=MIN_ARR_MAP_SIZE;
+		else
+			newSize=hashTableMaxSize;
+	}
 public:
 	explicit HashMap(int hashTableMaxSize) 
-	{ 
-        	this->hashTableMaxSize = hashTableMaxSize; 
+	{ 	
+		checkIfMapSizeLessThenAllowed(hashTableMaxSize, this->hashTableMaxSize);	
 		actualSize=0; 
-		arr = new HashNode<K,V>*[hashTableMaxSize]; 
+		arr = new HashNode<K,V>*[this->hashTableMaxSize]; 
           
-		for(int i=0 ; i < hashTableMaxSize ; i++) 
+		for(int i=0 ; i < this->hashTableMaxSize ; i++) 
 			arr[i] = NULL; 
           
 		dummy = new HashNode<K,V>(-1, -1); 
@@ -45,7 +54,7 @@ public:
 				delete this->arr[i];
 		}
 		this->actualSize=other.actualSize;
-		this->hashTableMaxSize=other.hashTableMaxSize;
+		checkIfMapSizeLessThenAllowed(other.hashTableMaxSize, this->hashTableMaxSize);
 		delete [] this->arr;
 		// create new array with save of source obj
                 this->arr = new HashNode<K,V>*[this->hashTableMaxSize];
@@ -62,7 +71,6 @@ public:
 
 	~HashMap()
 	{
-		cout << "destructor" << endl; 
 		for(int i=0 ; i < hashTableMaxSize ; i++) {
 			if (arr[i]!=NULL&&arr[i]->key!=-1)
 				delete arr[i];
@@ -73,7 +81,8 @@ public:
 
 	HashMap(const HashMap &other) {
 		this->actualSize=other.actualSize;
-		this->hashTableMaxSize=other.hashTableMaxSize;
+		checkIfMapSizeLessThenAllowed(other.hashTableMaxSize, this->hashTableMaxSize);
+		
 		this->dummy = new HashNode<K,V>(-1, -1);
 		this->arr= new HashNode<K,V>*[other.hashTableMaxSize];
 		for (int i=0; i <other.hashTableMaxSize; ++i ) {
@@ -158,9 +167,13 @@ public:
 		return -1;
 	}
       
-	int sizeofMap() 
+	int sizeOfMap() 
 	{
 		return actualSize;
+	}
+	int hashMapMaxSize()
+	{
+		return hashTableMaxSize;
 	}
       
 	bool isEmpty() 
@@ -169,6 +182,40 @@ public:
 	} 
 	
 	void resize (int newMaxTableSize) {
+		cout << "was resized" << endl;
+		// copy all data in arr to temprary tmp array
+		HashNode<K,V> **tmp = new HashNode<K,V>*[hashTableMaxSize];
+		for (int i=0; i <hashTableMaxSize; ++i ) {
+			tmp[i]=NULL;
+                        if (arr[i]!=NULL && arr[i]->key!=-1) {
+                                HashNode<K,V> *temp = new HashNode<K,V>(arr[i]->key, arr[i]->value);
+                                tmp[i]=temp;
+                        }
+                }
+		
+		// delete old arr
+		for (int i = 0; i < hashTableMaxSize; ++i) {
+			if (arr[i]!=NULL && arr[i]->key!=-1) 
+				delete arr[i];
+		}
+		delete this->dummy;
+		this->dummy=NULL;
+		delete [] arr;
+		
+		// create new arr
+		this->arr=new HashNode<K,V>*[newMaxTableSize];
+		for (int i=0; i < newMaxTableSize; ++i) {
+			arr[i]=NULL;
+		}
+		// update sizes
+		this->hashTableMaxSize=newMaxTableSize;
+		this->actualSize=0;
+		dummy = new HashNode<K,V>(-1, -1);
+		// copy from tmp arrey to new arrey
+		for (int i=0; i<hashTableMaxSize/2; ++i) {
+			if (tmp[i]!=NULL)
+				this->insertNode(tmp[i]->key, tmp[i]->value);
+		}
 	}
       
 	void printHashMapData() 
@@ -185,23 +232,24 @@ public:
 
 int main (int argc, char** argv) 
 {
-	//HashMap<int, int> copyTest(7);
-	//HashMap<int, int> operatorTest(6); 
-	//copyTest = operatorTest;
-	//HashMap<int, int> h = copyTest;
-	
-	HashMap<int, int> h(5);
+	HashMap<int, int> copyTest(1);
+	HashMap<int, int> operatorTest(1); 
+	copyTest = operatorTest;
+	HashMap<int, int> h = copyTest;
 	
 	h.insertNode(1,1);
 	h.insertNode(2,2); 
 	h.insertNode(7,7);
 	h.insertNode(2,5);
 	h.insertNode(4,4); 
+	
+	cout << "Print max size of Map: " << h.hashMapMaxSize() << endl;	
+
 	h.printHashMapData();
 	
-	cout << "Size Of Map:" << h.sizeofMap() <<endl; 
+	cout << "Size Of Map:" << h.sizeOfMap() <<endl; 
 	cout << "Deleted node:" << h.deleteNode(2) << endl; 
-	cout << "Size of Map:" << h.sizeofMap() <<endl; 
+	cout << "Size of Map:" << h.sizeOfMap() <<endl; 
 	cout << "Check if empty map:" << h.isEmpty() << endl; 
 	cout << "Get index 2:" << h.get(2) << endl;
 	cout << "Get index 7:" << h.get(7) << endl;	
