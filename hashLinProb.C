@@ -46,6 +46,7 @@ public:
 	
 	HashMap<K,V>& operator = (const HashMap<K,V>& other) 
 	{
+		if (this == &other) return *this;
 		//delete previous objects
 		delete this->dummy;
 		this->dummy=NULL;

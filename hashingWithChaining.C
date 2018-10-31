@@ -15,8 +15,11 @@ class HashChain {
 	
 	// array with indexes to the lists(chains)
 	list<int> *table;
+
+	HashChain(const HashChain& other) = delete;
+	HashChain& operator = (const HashChain& other) = delete;
 public:
-	HashChain(int Vert);
+	explicit HashChain(int Vert);
 	void insertItem(int x);
 	void delItem(int key);
 	int hashFunct(int x) {
