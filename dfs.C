@@ -55,6 +55,25 @@ public:
 		}
 
 	}
+	void DFSrecUtil (int startVert, vector<bool>& visited)
+	{	
+		// If vertex not visited we print the popped items.
+                if (!visited[startVert]) {
+                	cout << startVert << " ";
+                	visited[startVert] = true;
+                }
+                // Go through vertex represented by adjacency list 
+                // and put not visited vertex to stack. 
+                for (list<int>::iterator i = adjLst[startVert].begin(); i!=adjLst[startVert].end();i++) {
+                	if(!visited[*i]) {
+				DFSrecUtil(*i, visited);
+                	}
+                }
+	}	
+	void recursDFS (int startVert){
+		vector<bool> visited(vertexNum, false);
+		DFSrecUtil (startVert, visited);
+	}
 	void printAdjLists(int vertexNum);
 };
 
@@ -91,13 +110,30 @@ main (int argc, char** argv)
 
         cout << "\nDFS print:" << endl;
         cout <<"\ntest 1: start from 0:" <<endl;
-        g.DFS(0);
+        cout << "iterative output:";
+	g.DFS(0);
+	cout << endl;
+	cout <<"recurs output: ";
+	g.recursDFS(0);
+	cout << endl;
+
         cout <<"\ntest 2: start from 2:" <<endl;
-        g.DFS(2);
-        cout <<"\ntest 3: start from 3:" <<endl;
-        g.DFS(3);
-        cout <<"\ntest 4: start from 4:" <<endl;
-        g.DFS(4);
+        cout << "iterative output:";
+	g.DFS(2);
+	cout << endl;
+	cout <<"recurs output:"; 
+	g.recursDFS(2); 
+	cout << endl;
+
+        cout <<"\ntest 3: start from 3:" << endl;
+        cout << "iterative output:"; 
+	g.DFS(3);
+	cout << endl;
+
+        cout <<"\ntest 4: start from 4:" << endl;
+        cout << "iterative output:"; 
+	g.DFS(4);
+	cout << endl;
 
         return 0;
 
