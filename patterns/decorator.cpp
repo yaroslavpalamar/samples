@@ -7,7 +7,7 @@ using namespace std;
 // The abstract Coffee class defines the functionality of Coffee implemented by decorator
 struct Coffee {
 	virtual double getCost() = 0; // Returns the cost of the coffee
-	virtual std::string getIngredients() = 0; // Returns the ingredients of the coffee
+	virtual string getIngredients() = 0; // Returns the ingredients of the coffee
 	virtual ~Coffee() = 0;
 };
 inline Coffee::~Coffee() { }
@@ -15,11 +15,11 @@ inline Coffee::~Coffee() { }
 /* SimpleCoffee class. */
 // Extension of a simple coffee without any extra ingredients
 struct SimpleCoffee : public Coffee {
-	virtual double getCost() {
+	virtual double getCost() override {
 		return 1.0;
 	}
  
-	virtual std::string getIngredients() {
+	virtual std::string getIngredients() override {
 		return "Coffee";
 	}
 };
@@ -27,13 +27,13 @@ struct SimpleCoffee : public Coffee {
 /* Decorators */
 // Decorator Milk that adds milk to coffee.
 struct MilkDecorator : Coffee {
-	MilkDecorator (Coffee *basicCoffee) : basicCoffee(basicCoffee) {}
+	explicit MilkDecorator (Coffee *basicCoffee) : basicCoffee(basicCoffee) {}
  
-	virtual double getCost() { // Providing methods defined in the abstract superclass
+	virtual double getCost() override { // Providing methods defined in the abstract superclass
 		return basicCoffee->getCost() + 0.5;
 	}
 
-  	virtual std::string getIngredients() {
+  	virtual std::string getIngredients() override {
 		return basicCoffee->getIngredients() + ", " + "Milk";
 	}
 private:
@@ -42,13 +42,13 @@ private:
  
 // Decorator Whip that adds whip to coffee
 struct WhipDecorator : Coffee {
-	WhipDecorator (Coffee *basicCoffee) : basicCoffee(basicCoffee) {}
+	explicit WhipDecorator (Coffee *basicCoffee) : basicCoffee(basicCoffee) {}
  
-	virtual double getCost() {
+	virtual double getCost() override {
 		return basicCoffee->getCost() + 0.7;
 	}
 
- 	virtual std::string getIngredients() {
+ 	virtual std::string getIngredients() override {
 		return basicCoffee->getIngredients() + ", " + "Whip";
 	}
 private:
@@ -59,17 +59,20 @@ private:
 int main()
 {
 	SimpleCoffee s;
-	std::cout << "Cost: " << s.getCost() << "; Ingredients: " << s.getIngredients() << std::endl;
+	cout << "Cost: " << s.getCost() << "; Ingredients: " << s.getIngredients() << endl;
  
+	// decorate simple with milk:
 	MilkDecorator m(&s);
-	std::cout << "Cost: " << m.getCost() << "; Ingredients: " << m.getIngredients() << std::endl;
+	cout << "Cost: " << m.getCost() << "; Ingredients: " << m.getIngredients() << endl;
  
+	// decorate simple with whip:
 	WhipDecorator w(&s);
-	std::cout << "Cost: " << w.getCost() << "; Ingredients: " << w.getIngredients() << std::endl;
+	cout << "Cost: " << w.getCost() << "; Ingredients: " << w.getIngredients() << endl;
  
-	// Note that you can stack decorators:
-	MilkDecorator m2(&w);
-	std::cout << "Cost: " << m2.getCost() << "; Ingredients: " << m2.getIngredients() << std::endl;
+	// Note that you can stack decorators
+	// (for example you pass whip object instead of simple):
+	MilkDecorator milkAndWhip(&w);
+	cout << "Cost: " << milkAndWhip.getCost() << "; Ingredients: " << milkAndWhip.getIngredients() << endl;
    
 	return 0;
 }
