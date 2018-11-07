@@ -2,11 +2,11 @@
 #include <stdlib.h>
 #include <string.h>
 
-/* O(n ln n) function example to remove duplicated data in array */ 
+/* O(n log n) function example to remove duplicated data in array */ 
  
 int cmpfunc (const void * e1, const void * e2)
 {
-   return (strcmp(e1, e2));
+	return (strcmp(e1, e2));
 }
 
 
@@ -17,11 +17,10 @@ void removeDuplFromArray(char* arr, int arrLength) {
 	char* last = arr+arrLength;
 	char* result = first;
 	
-    while (++first != last)
-    {
-	    if (!(*result == *first)) 
-            *(++result)=*first;		
-    }
+	while (++first != last) {
+		if (!(*result == *first)) 
+			*(++result)=*first;		
+	}
 	(*++result) = '\0';
 }
  
@@ -31,13 +30,13 @@ int main(void)
 	int arrLength = sizeof(arr);
 
 	for(int n=0; n < arrLength; n++)
-    	printf("%d ",arr[n]);
-    printf("\n");
+	printf("%d ",arr[n]);
+	printf("\n");
 
 	removeDuplFromArray(arr, arrLength);
 	
-    for(int n=0; n < strlen(arr); n++)
-    	printf("%d ",arr[n]);
-	
+	for(int n=0; n < strlen(arr); n++)
+	printf("%d ",arr[n]);
 	return 0;
 }
+
