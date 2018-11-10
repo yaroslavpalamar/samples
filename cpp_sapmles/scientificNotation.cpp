@@ -2,6 +2,16 @@
 #include <sstream>
 using namespace std;
 
+/*
+FYI:
+kilo 2^10 or 1024 bytes. or if base 10 it will be 10^3 
+mega 2^20 or 
+giga 2^30
+tera 2^40 
+peta 2^50
+exa 2^60
+*/
+
 int main(int argc, char** argv)
 {
 	string s("1.60000000000000000000000000000000000e+01");
@@ -26,6 +36,10 @@ int main(int argc, char** argv)
 	cout << "Other examples of representation in C: " << endl;
 
 	printf("\n Double for:%f\n sci:%e \n or \n sci:%E   \n",d,d,d);
+
+	cout << "Values using scientific with std::scientific are : " << scientific << endl;
+	cout << d << '\n';
+
 
 	float var = 1.54334E-34;
 	double var2 = 1.54334E-34;
