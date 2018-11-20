@@ -8,7 +8,7 @@ Output: Prefix :  -M*-A/BC-/ADL
 Postfix to Infix : M-A-(B/C)*(A/D)-L
 */
 
-class PostToPref 
+class PostToInf 
 {
 	string postExp;	
 	bool isOperand(char x) {
@@ -20,7 +20,7 @@ public:
 	{
 		return postExp;
 	}
-	explicit PostToPref (string inputExpr)
+	explicit PostToInf (string inputExpr)
 	{
 		this->postExp=inputExpr;
 	}
@@ -47,9 +47,9 @@ int
 main(int argc, char** argv)
 {
 	//PostToPref poToPr("MABC/-AD/L-*-");
-	PostToPref poToPr("ab*c+");
-	cout << "Postfix: " << poToPr.getPostExp() << endl; 
-	cout << "Infix: " << poToPr.postToInfixConv() << endl;
+	PostToInf pTI("ab*c+");
+	cout << "Postfix: " << pTI.getPostExp() << endl; 
+	cout << "Infix: " << pTI.postToInfixConv() << endl;
 
         return 0;
 }
