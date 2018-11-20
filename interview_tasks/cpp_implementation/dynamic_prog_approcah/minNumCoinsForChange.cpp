@@ -30,7 +30,7 @@ main(int argc, char** argv)
 	int coins[] = {9,6,5,1};
 	int arrSize = sizeof(coins)/sizeof(coins[0]);
 	int forVal = 11;
-	cout << "Minimum coins required for value 11 is:"
+	cout << "Minimum coins required for value " << forVal <<  " when exist next conins 9,6,5,1 is:"
 		<< minNumCoins(coins, arrSize, forVal) << endl;
 	
 	return 0;
