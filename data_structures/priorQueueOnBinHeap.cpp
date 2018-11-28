@@ -61,7 +61,18 @@ public:
 	{
 		delete [] hArr;
 	}
-	void insertKey(int k)
+	void printHeap()
+	{
+		for (int i = 0; i < heapSize; ++i) {
+			cout << hArr[i] << " " ;
+		}
+		cout << endl;
+	}
+	int size ()
+	{
+		return heapSize;
+	}
+	void push(int k)
 	{
 		if (heapSize == maxHSize) {
 			cout << "\nOverflow: Could not insert Key";
@@ -89,7 +100,7 @@ public:
 		}
 	}
 		
-	int extractMin()
+	int pop()
 	{
 		if (heapSize <=0)
 			return INT_MAX;
@@ -110,11 +121,11 @@ public:
 	void deleteKey(int i)
 	{
 		decreaseKey(i, INT_MIN);
-		extractMin();
+		pop();
 	}
 	
 	// Returns the minimum key (key at root) from min heap 
-	int getMin() 
+	int top() 
 	{ 
 		return hArr[0]; 
 	}
@@ -144,8 +155,13 @@ main (int argc, char**argv)
 	pq.push(11);
 	pq.push(45);
 	pq.push(33);
+	pq.push(200);
+	pq.push(49);
 	pq.push(9);
 	pq.push(7);
+	pq.push(20);
+	//pq.top();
+	//pq.pop();
 
 	cout << "PQ print: " << endl;
 	printPQ(pq);
@@ -154,17 +170,31 @@ main (int argc, char**argv)
 
 	cout << "Min Heap implementation:" << endl;
 	MinHeap h(11);
-	h.insertKey(3);
-	h.insertKey(2);
-	h.insertKey(1);
-	h.insertKey(15);
-	h.insertKey(5);
-	h.insertKey(4);
-	h.insertKey(45);
-	cout << h.extractMin() << " ";
-	cout << h.getMin() << " ";
-	h.decreaseKey(2,1);
-	cout << h.getMin() << endl;
+	h.push(10000);
+	h.deleteKey(1);
+	h.push(10000);
+	cout << "Heap size: " << h.size() << endl;
+	cout << "Print popped value: " << h.pop() << endl;
+	cout << "Heap size: " << h.size() << endl;
+        cout << h.top() << endl;	
+	
+	h.push(11);
+	h.push(45);
+	h.push(33);
+	h.push(200);
+	h.push(49);
+	h.push(9);
+	h.push(7);
+	h.push(20);
+
+
+	cout << "Heap size: " << h.size() << endl;	
+	cout << "Print Heap: " << endl;
+	h.printHeap();
+
+	cout << "Decr Key: 3,2" << endl;
+	h.decreaseKey(3,2);
+	cout << "Print min after decrease: " << h.top() << endl;
 	return 0;
 }
 
