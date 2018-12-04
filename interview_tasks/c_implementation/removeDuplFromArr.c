@@ -3,6 +3,10 @@
 #include <string.h>
 
 /* O(n log n) function example to remove duplicated data in array */ 
+
+/* second implementation with complexity O(n) is faster, also 
+ * if array is very big for example 256 GB, we can ehchance solution with 
+ * multithreading*/
  
 int cmpfunc (const void * e1, const void * e2)
 {
