@@ -2,7 +2,7 @@
 #include <string.h>
 #include <stdlib.h>
 
-void memCpy(void* dest, void *src, size_t n)
+void memCpy(void* dest, const void *src, const size_t n)
 {
 	char *cSrc = (char *) src;
 	char *cDest = (char *) dest;
@@ -14,7 +14,7 @@ void memCpy(void* dest, void *src, size_t n)
 
 //memmove used just when data overlaps and corrupt buffer 
 //so for memmove need to use tmp buffer
-void memMove(void* dest, void *src, size_t n)
+void memMove(void* dest, const void *src, const size_t n)
 {
 	char *cSrc = (char *) src;
 	char *cDest = (char *) dest;
