@@ -83,6 +83,11 @@ bool isFileExist(const string& name) {
     return f.good();
 }
 
+// for deletion you can create two files and copy everything from one file to another without deleted rows.
+// after taht remove old file and rename new file to old one.
+
+
+
 int main (int argc, char** argv)
 {
 	if (!isFileExist(FILENAME))
