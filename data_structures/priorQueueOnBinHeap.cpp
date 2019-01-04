@@ -36,18 +36,18 @@ class MinHeap
 	}
 
 	// heapify mean create heap
-	void heapify(int i)
+	void heapify(int i, int hSize)
 	{
 		int l = left(i);
 		int r = right(i);
 		int smallest = i;
-		if (l < heapSize && hArr[l] < hArr[i])
+		if (l < hSize && hArr[l] < hArr[i])
 			smallest = l;
-		if (r < heapSize && hArr[r] < hArr[smallest])
+		if (r < hSize && hArr[r] < hArr[smallest])
 			smallest = r;
 		if (smallest != i) {
 			swap(&hArr[i], &hArr[smallest]);
-			heapify(smallest);
+			heapify(smallest, hSize);
 		}
 	}
 public:
@@ -114,7 +114,7 @@ public:
 		int root = hArr[0];
 		hArr[0] = hArr[heapSize - 1];
 		heapSize--;
-		heapify(0);
+		heapify(0, heapSize);
 		return root;
 	}
 	
@@ -129,7 +129,19 @@ public:
 	{ 
 		return hArr[0]; 
 	}
-	
+
+	// main function to do heap sort 
+	void heapSort() 
+	{ 
+  
+		// One by one extract an element from heap 
+		for (int i = heapSize - 1; i >= 0; i--) { 
+			// Move current root to end 
+			swap(hArr[0], hArr[i]); 
+			// call max heapify on the reduced heap 
+			heapify(0,i); 
+		}
+	}
 
 };
 
@@ -144,6 +156,7 @@ void printPQ(const priority_queue<int, std::vector<int>, std::greater<int> >& pq
 	}
 	cout << '\n';
 }
+
 
 
 
@@ -195,6 +208,11 @@ main (int argc, char**argv)
 	cout << "Decr Key: 3,2" << endl;
 	h.decreaseKey(3,2);
 	cout << "Print min after decrease: " << h.top() << endl;
+	
+	cout << "Sort Heap" << endl;
+	h.heapSort();
+	cout << "Print sorted Heap: " << endl;
+	h.printHeap();
 	return 0;
 }
 
