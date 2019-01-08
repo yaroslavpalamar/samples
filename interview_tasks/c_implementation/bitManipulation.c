@@ -56,7 +56,42 @@ void toggleBit(int* val, int bitN)
 	*val = *val  ^ (1 << bitN);
 }
 
+// 1.  right propagate rightmost 1 bit: y = x | (x-1)
+// 2.  isolate rightmost 1 bit: y = x | (x-1)
+//    10111100  (x)
+//  & 01000100  (-x)
+//    --------
+//    00000100
+//
+//    01110000  (x)
+//  & 10010000  (-x)
+//    --------
+//    00010000
+// 3. unset rightmost 1 bit:  y = x & (x-1)
+// 4. turn on the rightmost 1 bit y = x | (x+1) 
 
+/* 5. isolate rightmost 0 bit y = ~x & (x+1) 
+    10111100  (x)
+    --------
+    01000011  (~x)
+&   10111101  (x+1)
+    --------
+    00000001
+
+    01110111  (x)
+    --------
+    10001000  (~x)
+&   01111000  (x+1)
+    --------
+    00001000
+
+    00000001  (x)
+    --------
+    11111110  (~x)
+&   00000010  (x+1)
+    --------
+    00000010
+*/
 
 int main ()
 {
