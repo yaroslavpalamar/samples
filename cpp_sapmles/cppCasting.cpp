@@ -7,9 +7,6 @@ int constPass(int* ptr)
 }
 
 // for dynamic casting
-class B { };
-class D: public B {};
-
 class E { virtual void fun() {} }; 
 class F: public E { }; 
 
@@ -42,26 +39,22 @@ int main (int argc, char** argv)
 	cout << ch << endl; 
 
 	cout << "dynamic casting sample: " << endl;
-	// RTTI (Run-time type information) expose info about object data
-	// in runtime 
-	B *bb = new D; 
-	// D *dd = dynamic_cast<D*>(bb);  will get error the class not polymorphic.
 
 	E *ee1 = new E;
 	F *ff1 = dynamic_cast<F*>(ee1);
 	if(ff1 != NULL) 
 		cout<<"works"<<endl; 
 	else
-		cout<<"cannot cast E* to F*" << endl; 
+		cout<<"cannot cast E(parent) to F (E was as E obj)" << endl; 
 	
 	E *ee2 = new F;
 	F *ff2 = dynamic_cast<F*>(ee2);
 	
 	if(ff2 != NULL) 
-		cout<<"works, converted from E to F "<<endl; 
+		cout<<"works, converted from E(parent) to F (E was as F obj) (up to down)"<<endl; 
 	else
-		cout<<"cannot cast E* to F*" << endl; 
+		cout<<"cannot cast E(parent) to F" << endl; 
 	
-return 0;
+	return 0;
 }
 
