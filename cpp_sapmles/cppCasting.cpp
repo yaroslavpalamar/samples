@@ -1,14 +1,46 @@
 #include <iostream>
 using namespace std;
 
+/*
+	1. without word virtual will be compilation error in line with dynamic_cast
+*/
+
 int constPass(int* ptr)
 {
 	return (*ptr+7);
 }
 
 // for dynamic casting
-class E { virtual void fun() {} }; 
-class F: public E { }; 
+class E { virtual  void fun() {} }; 
+class F: public E { };
+
+void dynamicCastSample()
+{
+	cout << "dynamic casting sample: " << endl;
+
+	E *e1 = new E;
+	F *f1 = dynamic_cast<F*>(e1);
+	if(f1 != NULL) 
+		cout<<"works"<<endl; 
+	else
+		cout<<"cannot cast E(parent) to F(child)" << endl; 
+	
+	F *f2 = new F;
+	E *e2 = dynamic_cast<E*>(f2);
+	
+	if(e2 != NULL) 
+		cout<<"works, converted from F(child) to E(parent)"<<endl; 
+	else
+		cout<<"cannot cast E(parent) to F" << endl;
+
+	F *f3 = dynamic_cast<F*>(e2);
+	
+	if(f3 != NULL) 
+		cout<<"E converted to F because e2 was F !!!in the begining!!!"<<endl; 
+	else
+		cout<<"E not converted to F" << endl;
+
+}
 
 int main (int argc, char** argv)
 {
@@ -37,24 +69,8 @@ int main (int argc, char** argv)
 	cout << *ch << endl; 
 	cout << p << endl; 
 	cout << ch << endl; 
-
-	cout << "dynamic casting sample: " << endl;
-
-	E *ee1 = new E;
-	F *ff1 = dynamic_cast<F*>(ee1);
-	if(ff1 != NULL) 
-		cout<<"works"<<endl; 
-	else
-		cout<<"cannot cast E(parent) to F (E was as E obj)" << endl; 
 	
-	E *ee2 = new F;
-	F *ff2 = dynamic_cast<F*>(ee2);
-	
-	if(ff2 != NULL) 
-		cout<<"works, converted from E(parent) to F (E was as F obj) (up to down)"<<endl; 
-	else
-		cout<<"cannot cast E(parent) to F" << endl; 
-	
+	dynamicCastSample();
 	return 0;
 }
 
