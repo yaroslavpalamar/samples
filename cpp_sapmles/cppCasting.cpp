@@ -3,6 +3,21 @@ using namespace std;
 
 /*
 	1. without word virtual will be compilation error in line with dynamic_cast
+	2. type casting for recover infomation loss:
+		void advance_monsters(std::list<Monster*>& monsters);
+		void dragon(std::list<Monster*>& monsters) {
+    			advance_monsters(monsters);
+    			for (Monster* m : monsters) {
+        			Dragon *d = static_cast<Dragon*>(m); // or use dynamic_cast
+			}
+		}
+		In current case with type casting you don't need to copy 
+			all list data for creation list with static_cast<Dragon*>
+	3. casting used to increase or decrease precision
+	4. Type punning
+	5. When reading data from network or disk it will generally be accessible 
+		as a byte array or similar. 
+		Using reinterpret_cast you can change it into a class or struct.
 */
 
 int constPass(int* ptr)
