@@ -9,6 +9,12 @@ using namespace std;
  *
  * Part of code to display graph represented by adjacency list 
  * and Depth First Search algorithm to traverse the graph. 
+ * 1. Create graph obj wiht size of vertexes passed to constructor and allocate mem to adj list
+ * 2. Add Methods DFS(startVert) and addEdge(v, w)
+ * 3. Inside DFS create vector with visited nodes and stack for iterative solution
+ * 4. Put first vertex in stack (call recursively function or push in stack)
+ * 5. Inside recurs util or in while untill stack not empty check if node not visited mark it and print it\
+ * 6. After that in for() loop for all vertexes push values in stack (or call recurs function) if vertex not visited.
  *
  * */
 
@@ -66,10 +72,10 @@ public:
                 // and put not visited vertex to stack. 
                 for (list<int>::iterator i = adjLst[startVert].begin(); i!=adjLst[startVert].end();i++) {
                 	if(!visited[*i]) {
-				DFSrecUtil(*i, visited);
+						DFSrecUtil(*i, visited);
                 	}
                 }
-	}	
+	}
 	void recursDFS (int startVert){
 		vector<bool> visited(vertexNum, false);
 		DFSrecUtil (startVert, visited);
