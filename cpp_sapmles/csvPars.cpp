@@ -4,6 +4,15 @@
 #include <sstream>
 using namespace std;
 
+/*
+	1. firstly create the file use fstream fout.open
+	2. Read file with ifstream and use function getline(file, line) to parse the file and then function
+		while (getline(buf, token, ',')) to parse the line (buf type is istringstream)
+	3. For deletion you can create two files and copy everything from one file to another without deleted rows.
+		After that remove old file and rename new file to old one.
+	4. Append dtata useing ofstream and operator << outfile << "Data"; 
+*/
+
 const string FILENAME = "test.csv";
 
 void create()
@@ -82,10 +91,6 @@ bool isFileExist(const string& name) {
     ifstream f(name.c_str());
     return f.good();
 }
-
-// for deletion you can create two files and copy everything from one file to another without deleted rows.
-// after taht remove old file and rename new file to old one.
-
 
 
 int main (int argc, char** argv)

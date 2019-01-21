@@ -3,6 +3,10 @@
 #include <vector>
 using namespace std;
 
+/*
+	1. For example we need to pass to template function many variables than use variadic template <typename ... Param>
+*/
+
 // template for print any value
 template <typename T>
 void print(const T& t)

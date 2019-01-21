@@ -4,7 +4,7 @@ using namespace std;
 /*Current example display what is functor(functional object)
 - What is the main attribute of functor?
 - What the difference between functor and function? 
-(the difference is that functor can save some state for example in variable cout in example below)
+(the difference is that functor can save some state for example in variable   count   in example below)
 */
 
 class TestFunctor {

@@ -5,6 +5,7 @@
 using namespace std;
 
 /*Current example display "How works std::function" and what benefits of using std::function.
+	1. works like lambda but with std::function easier to understand lambda
 */
 
 void getDataFromBD()

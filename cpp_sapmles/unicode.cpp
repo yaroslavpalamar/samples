@@ -1,5 +1,10 @@
 #include <iostream> 
 using namespace std; 
+
+/*
+	1. wcout for unicode print
+	2. wchar_t type for unicode definition
+*/
   
 int main(int argc, char** argv) 
 {

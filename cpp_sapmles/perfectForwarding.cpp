@@ -2,6 +2,14 @@
 #include <vector>
 using namespace std;
 
+/*
+	1. For example we have struct with a lot of variables, data etc.
+	2. We create vector and push_back() to vector such objects 
+		when we pass to push_back() function we can use copy constr or move constr
+		the question is it possible to store data without move and copy constructor
+		for that just use v1.emplace_back(1,1,3); function
+*/
+
 struct BigStruct
 {
 	// let's imagine that current struct contain a lot of variables

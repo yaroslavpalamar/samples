@@ -3,9 +3,9 @@
 using namespace std;
 
 /*Benefits from usage function pointer:
-You can call different functions with similar declaration but without flags.
-For example you can have one logic in function showInfo() but showInfo() will call
-any DataFromBD() or DataFromWebServer() depends on the parameters.
+	1. You can call different functions with similar declaration and no needs to use flags.
+		For example you can have one logic in function showInfo() but showInfo() will call
+		any DataFromBD() or DataFromWebServer() depends on the parameters.
 */
 
 string getDataFromBD()

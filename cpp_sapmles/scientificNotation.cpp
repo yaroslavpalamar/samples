@@ -3,13 +3,18 @@
 using namespace std;
 
 /*
+	1. (2e-10*2+3=3.0000000004) (2e+5*2=400000)
+	2. C++ istringstream os(s) >> double
+	3. C use printf (%e)
 FYI:
-kilo 2^10 or 1024 bytes. or if base 10 it will be 10^3 
-mega 2^20 or 
-giga 2^30
-tera 2^40 
-peta 2^50
-exa 2^60
+kibi 2^10 or 1024 bytes. or if base 10 it will be 10^3 
+mebi 2^20 or 
+gibi 2^30
+tebi 2^40 
+pebi 2^50
+exbi 2^60
+zebi 2^7*10
+yobi 2^8*10
 */
 
 int main(int argc, char** argv)

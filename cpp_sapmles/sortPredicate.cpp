@@ -4,7 +4,8 @@
 using namespace std;
 
 /*Current example display how to sort valuse with predicate
-
+	1. usage of sort(v.begin(), v.end(), compareValues); function from <algorithm>
+	2. don't forget about lambda
 */
 
 //example of unary predicate as function

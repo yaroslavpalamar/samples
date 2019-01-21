@@ -3,10 +3,10 @@
 #include <vector>
 using namespace std;
 
-/*Current example display what is predicate
-- What is the predicate? (predicate is a functor or function which return bool value)
-- How to check how many values in vector greater then zero? What is algorithm cout_if?
-- Show example of predicate function and predicate functor.
+/* Current example display what is predicate
+	1. What is the predicate? (predicate is a functor or function which return bool value)
+	2. How to check how many values in vector greater then zero? What is algorithm cout_if?
+	3. Show example of predicate function and predicate functor.
 */
 
 //predicate as function

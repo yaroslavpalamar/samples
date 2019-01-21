@@ -5,9 +5,9 @@
 using namespace std;
 
 /*Current example display "How works lambda functions"
-- lambda function call and compare with std::function call
-- how to call and pass value to lambda function
-- return value for lambda functions
+	1. lambda function call and compare with std::function call
+	2. how to call and pass value to lambda function
+	3. return value for lambda functions
 */
 
 
