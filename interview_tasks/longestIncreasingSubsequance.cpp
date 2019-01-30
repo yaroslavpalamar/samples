@@ -69,11 +69,10 @@ vector<int> longest_increasing_subsequence(vector<int> sequence) {
 			continue;
 		}
 		if (lis[i]==maxVal) {
-			result.push_back(sequence[i]);
+			result.insert(result.begin(), sequence[i]);
 			maxVal--;
 		}
 	}
-	reverse(result.begin(), result.end());
 	return result;
 }
 
