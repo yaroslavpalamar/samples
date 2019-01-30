@@ -48,30 +48,40 @@ vector<int> longest_increasing_subsequence(vector<int> sequence) {
 	}
 	int lis[seqSize]; 
 	lis[0] = 1;
+	int maxVal = 0;
+	int indWithMaxVal = 0;
 	for (int i = 0; i < seqSize; i++) {
 		lis[i]=1;
 		for (int j = 0; j < i; j++) {
 			if (sequence[i] > sequence[j] && lis[i] < lis[j]+1) {
 				lis[i]=lis[j]+1;
+				if (lis[i] > maxVal) {
+					maxVal = lis[i];
+					indWithMaxVal=i;
+				}
 			}
 		}
 	}
-	for (int i = 0; i < seqSize; i++ ) {
-		vector<int> v;
-		v.push_back(sequence[i]);
-		while (lis[i]==lis[i+1]) {
-			i++;
-			v.push_back(sequence[i]);
+	for (int i = indWithMaxVal; i >= 0; --i) {
+		if (result.empty()) {
+			result.push_back(sequence[i]);
+			maxVal--;
+			continue;
 		}
-		result.push_back(*min_element(v.begin(), v.end()));
+		if (lis[i]==maxVal) {
+			result.push_back(sequence[i]);
+			maxVal--;
+		}
 	}
+	reverse(result.begin(), result.end());
 	return result;
 }
 
 int main() {
-	vector<int> test = {200,199,198,197,2,7,77,11,14,4,0,19};
+	vector<int> test = {200,199,198,197,2,7,77,11,14,4,0,19,19};
 	//vector<int> test;
 	//vector<int> test{2};
+	//vector<int> test{3,3};
 	vector<int> result = longest_increasing_subsequence(test);
 	int i=0;
 	for (int val:result) {
