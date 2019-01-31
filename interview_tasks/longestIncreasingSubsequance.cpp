@@ -22,19 +22,28 @@ using namespace std;
 		if input size 0 return empty vector
 		if input size 1 return first element 
 		create array lis[seqSize] with size of input vector
-		for (int i =0; i< seqSize;i++) each element in vector	
-			set lis[i] to 1
-			for ( int j=0; j < i;j++)
-				if (input[i] > input[j] && lis[i] < lis[j]+1)
-					lis[i]=lis[j]+1
-
-			int lastGoodVal=arr[0];
-			for (int i = 0 ; i < seqSize; i++)
-				if (lastGoodVal+1==lis[i])
-					result.push_back(sequence.at(i))
-					lastGoodVal=arr[i];
-					
-		...
+		int maxVal - save max value in input vector here
+		int indWithMaxVal - save index that point to max val in input vector
+		for (int i = 0; i < seqSize; i++) each element in vector
+			set lis[i] to 1 //200=1, 199=1, 198=1, 197=1, 2=1, 7=2, 77=2.	
+			for ( int j=0; j < i; j++) { // recalculate length for every element in subsequence
+				if (input[i] > input[j] && lis[i] < lis[j]+1){ //7>2&&2>1,77>7&&....11>7,11>2
+					lis[i]=lis[j]+1 //7:2; 11:2,11:3 (for 11 will go to this block two times.)
+					if (lis[i]>maxVal) {
+						maxVal=lis[i]
+						indWithMaxVal =i 
+					}
+				}
+			}
+		result.push_back(input(indWithMaxVal--))  push max element to resultand decrement 
+							  index to next value to find less value
+		maxVal-- one value in result so decrement maxVal
+		for (int i = indWithMaxVal; i >=0;i--) {
+			if (lis[i]==maxVal)
+				result.insert(sequence[i])
+				maxVal--;
+		}
+		return result;
 */
 
 vector<int> longest_increasing_subsequence(vector<int> sequence) {
@@ -47,12 +56,11 @@ vector<int> longest_increasing_subsequence(vector<int> sequence) {
 		return result;
 	}
 	int lis[seqSize]; 
-	lis[0] = 1;
 	int maxVal = 0;
 	int indWithMaxVal = 0;
-	for (int i = 0; i < seqSize; i++) {
+	for (int i = 0; i < seqSize; ++i) {
 		lis[i]=1;
-		for (int j = 0; j < i; j++) {
+		for (int j = 0; j < i; ++j) {
 			if (sequence[i] > sequence[j] && lis[i] < lis[j]+1) {
 				lis[i]=lis[j]+1;
 				if (lis[i] > maxVal) {
@@ -62,15 +70,16 @@ vector<int> longest_increasing_subsequence(vector<int> sequence) {
 			}
 		}
 	}
+	result.push_back(sequence[indWithMaxVal]);
+	if (maxVal==0) // just for optimization
+		return result;
+	--indWithMaxVal;
+	--maxVal;
+
 	for (int i = indWithMaxVal; i >= 0; --i) {
-		if (result.empty()) {
-			result.push_back(sequence[i]);
-			maxVal--;
-			continue;
-		}
 		if (lis[i]==maxVal) {
 			result.insert(result.begin(), sequence[i]);
-			maxVal--;
+			--maxVal;
 		}
 	}
 	return result;
