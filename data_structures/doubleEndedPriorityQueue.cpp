@@ -2,6 +2,15 @@
 #include <set>
 using namespace std;
 
+/*
+	1. doubele ended prio queue can be implemented with <set>.
+	2. Create struct with private value set<int> s;
+	3. all methods needed that can just use <set> methods from stl library:
+		int size(), bool isEmpty(), insert(), getMin(), getMax(s.rbegin())
+		void delMin(if size==0 return ) call erase(sbegin) delMax( it=s.end() erase(it))
+
+*/
+
 struct DblEndPrQueue {
 	int size ()
 	{

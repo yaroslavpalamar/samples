@@ -3,6 +3,11 @@
 #include <vector>
 using namespace std;
 
+/*
+	1. Exist min heap and max heap. Also exist Binomial and Fibonacci heaps.
+	2. We can check whether container is heap with is_heap(v.begin(), v.end())
+	3. Vector can be changed to heap (heapefied) with make_heap() function
+*/
 
 /*
 min heap example:
@@ -20,7 +25,6 @@ max heap example:
    17	3   25   1
 
 
-Also exist Binomial and Fibonacci heaps.
 */
 
 

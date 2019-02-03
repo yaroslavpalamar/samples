@@ -2,6 +2,18 @@
 #include <iostream>
 using namespace std;
 
+/*
+	1. Create class stack with two private member: 
+		pq - priority_queue (inside pq can be pair<int,int> in case if we need to save cnt for pushed val)
+		int cnt to count
+	2. Also define publick methods 
+		constructor Stack() init cnt=0
+		push()
+		pop() check if empty if empty print error
+		top() retrurn pq.top().second (for pair use .second)
+		isEmpty
+*/
+
 typedef pair<int, int> p;
 
 class Stack {

@@ -1,18 +1,30 @@
 #include <iostream>
 using namespace std;
 
-/*forward_list sample similar to STL implementation with methods:
-push_back()
-getSize()
-operator []
-
-pop_front();
-void clear();
+	/* forward lirked list implementation:
+	1. define template class List{} with private template class Node{},
+		size of list and pointer to head.
+		also List{} contain next methods:
+		List() init size to 0 and head to nullptr
+		~List() call clear()
+		push_back() if node null alloc memory to head call Node constructor with value
+			if head is exist define pointer to Node and go to next while not reach nullptr 
+			when you rich nullptr go to next line from loop and call Node constr
+		getSize() return size;
+		operator [] define pointer to current and assign this pointer to head
+			loop untill pointer reach the nullptr or index == counter(num of operation in loop)
+			if index==counter return data in this index
+		pop_front(); define tmp pointer to head assign next by head and remove tmp, decrease size
+		void clear(); while size() pop_front() 
     
-push_front(T data);
-insert(int index, T val);
-removeAt(int index);
-pop_back();
+		push_front(T data); just call constructor of Node assign return to head
+			 and pass two parameters (data, head) to init pNext with head
+		insert(int index, T val);  //defne prev pointer and assign it to head then check if index ==0 call pop_front
+			else loop untill index and assigh prev then create new Node
+		removeAt(int index); /defne prev pointer and assign it to head then check if index ==0 call push_front
+			else loop untill index and assign prev tnen delete new Node
+			define new pointer assign prev to that pointer, prev assignt to next and remove this pointer
+		pop_back(); call removeAt(size-1)
 */
 
 template <typename T>
