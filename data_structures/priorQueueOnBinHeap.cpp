@@ -5,15 +5,26 @@
 using namespace std;
 
 /*
-	1. minHeap
-*/
+	1. minHeap class contain next functions:
+		private left(2*i+2), right(2*i+1),
+		heapify() {firstly find left() and right() indexes 
+			define smallest or biggest element in array and assign it to index,
+			
+	2. private parent(){(i-1)/2} func used by push() func
+		*arr pointer to array
+		maxHSize=capacity
+		heapSize=current num of element in heap
+		swap() func
+		getSize() func
+		pop() func
+		replaceKey() func replace value by some index
+	3. constructor allocate memory for arr[], destructor delete mem in arr[]
+	4. push()
+		pop(call heapify())
+		deleteKey() call replaceKey(INT_MIN)
+	5. sort( for(int i=heapSize, i>=0;--i {swap(arr[0][i]-move to end) call hepify(0,i))} ))
 
-void swap(int *x, int *y) 
-{
-	int tmp = *x;
-	*x = *y;
-	*y = tmp;
-}
+*/
 
 class MinHeap
 {
@@ -22,6 +33,13 @@ class MinHeap
 	int heapSize;  // current number of elements in heap
 	MinHeap (const MinHeap& other) = delete;
 	MinHeap& operator = (const MinHeap& other) = delete;
+
+	void swap(int *x, int *y) 
+	{
+		int tmp = *x;
+		*x = *y;
+		*y = tmp;
+	}
 
 	// get parent index
 	int parent(int i)
@@ -94,7 +112,7 @@ public:
 		}
 	}
 	
-	void decreaseKey(int i, int newVal)
+	void replaceKey(int i, int newVal)
 	{
 		hArr[i] = newVal;
 		while (i != 0 && hArr[parent(i)] > hArr[i])
@@ -124,7 +142,7 @@ public:
 	
 	void deleteKey(int i)
 	{
-		decreaseKey(i, INT_MIN);
+		replaceKey(i, INT_MIN);
 		pop();
 	}
 	
@@ -141,7 +159,7 @@ public:
 		// One by one extract an element from heap 
 		for (int i = heapSize - 1; i >= 0; i--) { 
 			// Move current root to end 
-			swap(hArr[0], hArr[i]); 
+			swap(&hArr[0], &hArr[i]); 
 			// call max heapify on the reduced heap 
 			heapify(0,i); 
 		}
@@ -210,8 +228,8 @@ main (int argc, char**argv)
 	h.printHeap();
 
 	cout << "Decr Key: 3,2" << endl;
-	h.decreaseKey(3,2);
-	cout << "Print min after decrease: " << h.top() << endl;
+	h.replaceKey(3,2);
+	cout << "Print min after replace: " << h.top() << endl;
 	
 	cout << "Sort Heap" << endl;
 	h.heapSort();
