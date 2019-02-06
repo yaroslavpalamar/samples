@@ -4,14 +4,20 @@ using namespace std;
 /*
 	Hash Map Linear probing:
 	1. template class HashMap contain hashTableMaxSize=capacity and actualSize private variables
-		two dimentional array with template HashNode<Key, Val> and pointer on dummy HashNode<K,V>
+		template HashNode<Key, Val>**arr and pointer on dummy HashNode<K,V>
 		also can be implemented private method to check if checkIfMapSizeLessThenAllowed()
 	2. explicit HashMap(capacity) init variables, actualSize=0 and allocate memory for **arr and assign to NULL, also init dymmy to (-1,-1)
 	3. destructor delete every element and allocated array and dummy
 	4. hashCode(key) function return key%hashTableMaxSize also add function isEmpty(), maxHashMapSize(), hashMapSize()
-	5. get()
-	6. insertNode() {1. allocate mem for one HashNode and get hash for this node hashIndex = hashCode(key);}
-	7. deleteNode()
+	5. get(1. get hash 2. loop while arr[hash] not NULL 3. check for key if found return 
+			4. increment hash and call hashCode(key))
+	6. insertNode() {1. allocate mem for one HashNode and get hash for this node hashIndex = hashCode(key);
+			 2. loop through arr(arr[hash]!=NULL&&hashKey!=arr[hash]->key&&node->key!=-1)(hashKey=hashCode(++hashKey))}
+			 3. if found empty node increase hashMap size and assign node
+	7. deleteNode() {1. find hash 2. loop throug arr whil not NULL and compare keys
+			3. if not foud increment hash and call hashCode(hash)
+			4. if found assign dummy to value to that place and decrease size of hashMap and return value
+			5. if the end of the loop return -1}
 	8. Aditionally may be implemented resize() function assignment operator and copy constructor.
 */
 
@@ -147,7 +153,9 @@ public:
 			//if node found 
 			if(arr[hashIndex]->key == key) 
 			{ 
-				HashNode<K,V> *temp = arr[hashIndex]; 
+				HashNode<K,V> *temp = arr[hashIndex];
+ 
+				delete arr[hashIndex];
 
 				//Insert dummy node here for further use 
 				arr[hashIndex] = dummy; 
@@ -170,9 +178,9 @@ public:
 		//finding the node with given key    
 		while(arr[hashIndex] != NULL) 
 		{    
-			int counter =0; 
+			/*int counter =0; 
 			if(counter++>hashTableMaxSize)  //to avoid infinite loop 
-				return -1;         
+				return -1;  */       
 			//if node found return its value 
 			if(arr[hashIndex]->key == key) 
 				return arr[hashIndex]->value; 
