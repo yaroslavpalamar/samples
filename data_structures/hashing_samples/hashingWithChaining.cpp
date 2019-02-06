@@ -6,6 +6,11 @@ using namespace std;
 /*
  *
  * Implementing hash table with separate chaining
+	1. HashChin class contain hashTablSize, pointer to list, hashFunct(x){x%hashTabSize} 
+	2. constructor init hashTabSize and alloc mem for list arr of lists
+	3. insertItem(key) {find hash for key and push_back(key) to list in table[hash] with lists}
+	4. delItem(key) {1. find hash 2 go throuhg list for every element and compare with the key
+			 3. if found key break; from loop 4. erase() element in list }
  *
  */
 
