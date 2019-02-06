@@ -1,6 +1,20 @@
 #include <iostream>
 using namespace std;
 
+/*
+	Hash Map Linear probing:
+	1. template class HashMap contain hashTableMaxSize=capacity and actualSize private variables
+		two dimentional array with template HashNode<Key, Val> and pointer on dummy HashNode<K,V>
+		also can be implemented private method to check if checkIfMapSizeLessThenAllowed()
+	2. explicit HashMap(capacity) init variables, actualSize=0 and allocate memory for **arr and assign to NULL, also init dymmy to (-1,-1)
+	3. destructor delete every element and allocated array and dummy
+	4. hashCode(key) function return key%hashTableMaxSize also add function isEmpty(), maxHashMapSize(), hashMapSize()
+	5. get()
+	6. insertNode() {1. allocate mem for one HashNode and get hash for this node hashIndex = hashCode(key);}
+	7. deleteNode()
+	8. Aditionally may be implemented resize() function assignment operator and copy constructor.
+*/
+
 template<typename K, typename V>
 struct HashNode 
 {
