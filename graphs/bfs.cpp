@@ -7,7 +7,15 @@ using namespace std;
 /* BFS implementation 
  *
  * Part of code to display graph represented by adjacency list 
- * and Breadth First Search algorithm to traverse the graph. 
+ * and Breadth First Search algorithm to traverse the graph.
+ * 1. Graph class with private vertexNum and list<int>*adjList 
+ * 2. in constructor init vertexNum and alloc array for adjList
+ * 3. addEdge(v,w) push_back(w) to list
+ * 4. BFS(int startVert) {vector<bool>(vertexNum,false), list<int>queue
+	visited[startVert]=true queue.push_back(startVert) 
+	while(!queue.empty(){startVert=queue.front();queue.pop_front();}
+		for (iter i =begin(); i !=adjLst[startVert].end(); ++i)
+			if (!visited[*i]){queue.push_back(*i); visited[*i]=true;}}
  *
  * */
 
