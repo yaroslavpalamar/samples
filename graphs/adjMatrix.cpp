@@ -18,6 +18,13 @@ using namespace std;
  * 2 | 0 0 0 1 0
  * 3 | 0 0 0 0 1
  * 4 | 0 0 0 0 0
+
+
+	1. Graph class contain **adjMatrix, V=size
+	2. Constructor init all matrix values to 0 for(){adjMatrix[i]=new int [V]}
+	3. addEdge() adjMatrix[src][dest]=1;
+	4. destructor call freeMatrix for every element for(){adjMatrix[i]=delete int [V]}
+
  */
 
 class Graph

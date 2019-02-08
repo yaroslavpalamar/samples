@@ -20,6 +20,20 @@ using namespace std;
  * 2 | 0 0 0 1 0
  * 3 | 0 0 0 0 1
  * 4 | 0 0 0 0 0
+
+	1. Graph class contain **adjMatrix, V=size                  	
+	2. Constructor init all matrix values to 0 for(){adjMatrix[i]=new int [V]}
+	3. addEdge() adjMatrix[src][dest]=1;                                                                                                                         
+	4. destructor call freeMatrix for every element for(){adjMatrix[i]=delete int [V]}
+	5. vector<int> visited(V, false); 
+	6. create queue<int> and push_back first element
+	7. while() {queue<int>not empty start.vert = queue.front()
+		startVert = queue.front();
+		queue.pop_front();
+			for (int i=0; i <V; ++i) { 
+				if (visited[i]==false && adjMatrix[startVert][i]==1) {
+					queue.push_back(i); visited[startVert]=true;}}
+
  */
 
 class Graph

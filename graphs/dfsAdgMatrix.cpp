@@ -20,6 +20,23 @@ using namespace std;
  * 2 | 0 0 0 1 0
  * 3 | 0 0 0 0 1
  * 4 | 0 0 0 0 0
+ 
+ 
+ 	1. Graph class contain **adjMatrix, V=size                  	
+	2. Constructor init all matrix values to 0 for(){adjMatrix[i]=new int [V]}
+	3. addEdge() adjMatrix[src][dest]=1;                                                                                                                         
+	4. destructor call freeMatrix for every element for(){adjMatrix[i]=delete int [V]}
+	5. vector<int> visited(V, false); 
+	6. create stack<int> and push_back first element
+	7. while() {stack<int>not empty start.vert = stack.front()
+		startVert = stack.pop();
+		stack.pop();
+			if (!visited[startVert]) {visited[startVert]=true cout<<..}
+			for (int i=0; i <V; ++i) { 
+				if (visited[i]==false && adjMatrix[startVert][i]==1) {
+					stack.push(i)}
+				
+ 
  */
 
 class Graph

@@ -9,7 +9,7 @@ using namespace std;
  *
  * Part of code to display graph represented by adjacency list 
  * and Depth First Search algorithm to traverse the graph. 
- * 1. Create graph obj wiht size of vertexes passed to constructor and allocate mem to adj list
+ * 1. Create graph obj with size of vertexes passed to constructor and allocate mem to adj list
  * 2. Add Methods DFS(startVert) and addEdge(v, w)
  * 3. Inside DFS create vector with visited nodes and stack for iterative solution
  * 4. Put first vertex in stack (call recursively function or push in stack)
