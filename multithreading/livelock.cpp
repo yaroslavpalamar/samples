@@ -5,6 +5,11 @@
 
 using namespace std;
 
+/*
+	1. A real-world example of livelock occurs when two people meet in a narrow corridor
+	2. 
+*/
+
 class CommonRes;
 class Worker;
 class Worker {
@@ -76,15 +81,15 @@ public:
 
 int main()
 {
-	mutex mtx1;
-	mutex mtx2;
-	Worker w1("w1", true, 1);
-	Worker w2("w2", true, 2);
-	CommonRes cR(&w1);
-	//w1.work(&cR, &w2, &mtx1);
-	//w2.work(&cR, &w1, &mtx2);
-	thread t1(&Worker::work, &w1, &cR, &w2, &mtx1);
-	thread t2(&Worker::work, &w2, &cR, &w1, &mtx2);	
+	mutex mtx1;					//COMMENT OUT TO FIX LIVELOCK
+	mutex mtx2;					//COMMENT OUT
+	Worker w1("w1", true, 1);			//COMMENT OUT
+	Worker w2("w2", true, 2);			//COMMENT OUT
+	CommonRes cR(&w1);				//COMMENT OUT
+	//w1.work(&cR, &w2, &mtx1);			//UNCOMMENT   TO FIX LIVELOCK
+	//w2.work(&cR, &w1, &mtx2);			//UNCOMMENT   TO FIX LIVELOCK
+	thread t1(&Worker::work, &w1, &cR, &w2, &mtx1);	//COMMENT OUT
+	thread t2(&Worker::work, &w2, &cR, &w1, &mtx2);	//COMMENT OUT TO FIX LIVELOCK
 	t1.join();
 	t2.join();
 
