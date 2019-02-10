@@ -3,6 +3,20 @@
 #include <set>
 using namespace std;
 
+/*
+	1. clasObserver { virtual void update{update(Subject & subj)=0};
+	2. class Subject {string state; set<Obsever*> observ;
+		void notifyObservers(){for (auto&o: observers){o->update(*this)}}}
+		attachObserver(Observer*o){obserers.insert(o)
+		void detachObserver(Observer *o){observers.erase(o)}
+		string getState{}{return state;}
+		void changeState(const string &s){state=s; notifyObseervers();}}
+	3. class ObserverImpl : public Observer
+		string state;
+		void update(Subject & sbj) override {sbf.getState()}
+
+*/
+
 class Subject;
 
 class Observer {

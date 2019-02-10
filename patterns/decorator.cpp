@@ -3,6 +3,21 @@
 
 using namespace std;
 
+/*
+	1. abstract struct Coffee{virtual getCost()=0;... virtual ~Coffee}
+	2. child simpleCoffe class impl class with basic functionality:
+		struct SimpleCoffee : public Coffee {
+			virtual double getCost() override {
+			return 1.0; }}
+	3. decorator impl: MilkDecorator : Coffee { will have private pointer to basicCoffee
+		 basicCoffee it is a objec which we want to decorate, init obj in constructor:
+		 explicit MilkDecorator (Coffee *basicCoffee) : basicCoffee(basicCoffee) {}}
+		 impl decor method virtual double getCost() override {
+			return basicCoffee->getCost() + 0.5;
+	}
+		
+*/
+
 /* Abstract base class */
 // The abstract Coffee class defines the functionality of Coffee implemented by decorator
 struct Coffee {
