@@ -10,8 +10,32 @@ using namespace std;
  * Part of code to display graph represented by adjacency list 
  * and Dijkstra algorithm based on priority queue to traverse the graph and search for shortest path. 
  * Complexity O(ElogV)) because O(E) vertices in priority_queue and O(log E) is same as O(log V)
- *
- * */
+ *	1. class Graph with int VertexNm and list<pair<int,int>>*adjList; 
+	2. constructor init adjList allocate memory and init vertexNum;
+	3. addEdge(int v1, int v2, int w) init pair adjLst[v1].push_back(make_pair(v2, w));
+	4. dijkstraShortPath (int startVert) {
+		priority_queue<pair, vector<pair<int,int>>, greater<pari<..>> pq;
+		const int INF=0xfffffff; vector<int> dist(vertexNum, INF) init vector by infinity
+		pq.push(make_pair(0,startVert))
+		dist[startVert] = 0; // dist to first element init to 0
+		while(!pq.empty()) {
+			// Go to the next element in adj list.
+			int next = pq.top().second; 
+			pq.pop();
+			for (list<pair<int, int>>::iterator i = adjLst[next].begin(); i != adjLst[next].end(); ++i) {
+				int vert = (*i).first;
+				int weight = (*i).second;
+				// if path is shorter to vert throuhg "next"
+				if (dist[vert] > dist[next] + weight) {
+					// update distance to vertex
+					dist[vert] = dist[next] + weight;
+					pq.push(make_pair(dist[vert],vert));
+			}}}}}
+		// Print distance from->to...
+		for (int i = 0; i < vertexNum; ++i) {
+			cout << i << "=" << dist[i] << endl;
+		}	
+* */
 
 class Graph {
 	int vertexNum;

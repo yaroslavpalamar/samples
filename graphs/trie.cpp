@@ -4,6 +4,32 @@ using namespace std;
 
 // bst and balanced bst have time complexity m*log n, 
 // trie can have O(M) but need more space.
+/*
+	1. Create struct TrieNode {struct TrieNode *children[ALPHABET_SIZE]; bool isEndOfWord}
+	2. const int ALPHABET_SIZE=26
+	3. TrieNode *getNode(void) return new trie node
+		pNode = newTrieNode; pNode->isEndOfWord = false;
+		init all children to 0 for(int i =0; i < ALPHABET_SIZE; I++) children[i]NULL
+		retrun p pNode;
+	4. void insert(struct TrieNode *root, string key)
+		for (int i = 0; i < key.length(); i++) { 
+		int index = key[i] - 'a'; 
+		if (!pCrawl->children[index]) 
+			pCrawl->children[index] = getNode();
+		pCrawl = pCrawl->children[index]; }
+		set isEndOfWord=true;
+	5. search()
+		struct TrieNode *pCrawl = root; 
+		for (int i = 0; i < key.length(); i++) { 
+			int index = key[i] - 'a'; 
+			if (!pCrawl->children[index]) 
+				return false;
+			pCrawl = pCrawl->children[index]; 
+		} 
+		return (pCrawl != NULL && pCrawl->isEndOfWord);	
+	6. remove()
+	7. isEmpty()
+*/
 
 const int ALPHABET_SIZE = 26; 
   

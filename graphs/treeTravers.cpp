@@ -1,9 +1,12 @@
 #include <iostream>
 using namespace std;;
 /*
-inorder - 1-left first then 2-root then 3-right
-preorder - 1-root will be traversal fist then 2-left then 3-right
-postorder - 3-root in the end, first 1-rigth 2-left
+1. create template<typendame T> struct Node {T data; Node* left; Node* right;
+						Node(T data, Node* left=NULL, Node* right=NULL){init all}}
+2. inorder - 1-left first then 2-root then 3-right
+	void inorderTrav(Node<int>* root) {if (root) inorderTrav(root->left); cout << root->data; inorderTrav(r->right)}
+3. preorder - 1-root will be traversal fist then 2-left then 3-right
+4. postorder - 3-root in the end, first 1-rigth 2-left
 */
 
 template<typename T>

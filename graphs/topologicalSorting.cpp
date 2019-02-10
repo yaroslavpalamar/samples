@@ -10,13 +10,20 @@ using namespace std;
  * 3. If we pop vertexes from stack and change every vertex from 
  * 	original value to sorted value
  * 	for example in stack was 1,4,3,2 and we change it to 1,2,3,4 
- * 	in resul new graph with updated values from 1,4,3,2 to 1,2,3,4 will be sorted.
+ * 	in result new graph with updated values from 1,4,3,2 to 1,2,3,4 will be sorted.
  */
 
 /* DFS implementation 
  *
  * Part of code to display graph represented by adjacency list 
- * and Depth First Search algorithm to traverse the graph. 
+ * 1. topologicalSort() {create stack<int> stack(); mark every vertext of vector as false
+	in for loop if vertex[]==false{call topologicalSortUtil(int v, bool visited[],stack<int> &Stack)
+		vertex[v]=true}
+		for(it=begin(); it != end(); it++)
+			if !visited
+				topologicalSortUtil(*i, visited, Stack);
+		stack.push(i)}
+   2. In while loop print al vertexes in stack
  *
  * */
 
@@ -36,38 +43,10 @@ public:
 	{
 		adjLst[v].push_back(w);
 	}
-	void DFS (int startVert) {
-		// vector for marking visited vertices
-		// on the begining they are all marked as not visited
-		vector<bool> visited(vertexNum, false);
-
-		stack<int> stack;
-		// start traversal by pushing node to the stack
-		stack.push(startVert);
-		while (!stack.empty()) {
-			// pop vertex from the stack and change startVert value.
-			int startVert = stack.top();
-			stack.pop();
-
-			// If vertex not visited we print the popped items.
-			if (!visited[startVert]) 
-			{ 
-				cout << startVert << " "; 
-				visited[startVert] = true; 
-			}
-			// Go through vertex represented by adjacency list 
-			// and put not visited vertex to stack. 
-			for (list<int>::iterator i = adjLst[startVert].begin(); i!=adjLst[startVert].end();i++) {
-				if(!visited[*i]) {
-					stack.push(*i);
-				}
-			}
-		}
-
-	}
 	void printAdjLists(int vertexNum);
+
 	// prints a Topological Sort of the complete graph 
-    void topologicalSort();
+	void topologicalSort();
 };
 
 // print adjacency list representation of Graph
@@ -85,20 +64,19 @@ Graph::printAdjLists(int vertexNum)
 }
 
 // A recursive function used by topologicalSort 
-void Graph::topologicalSortUtil(int v, bool visited[],  
-                                stack<int> &Stack) 
+void Graph::topologicalSortUtil(int v, bool visited[],stack<int> &Stack) 
 { 
-    // Mark the current node as visited. 
-    visited[v] = true; 
+	// Mark the current node as visited. 
+	visited[v] = true; 
   
-    // Recur for all the vertices adjacent to this vertex 
-    list<int>::iterator i; 
-    for (i = adjLst[v].begin(); i != adjLst[v].end(); ++i) 
-        if (!visited[*i]) 
-            topologicalSortUtil(*i, visited, Stack); 
+	// Recur for all the vertices adjacent to this vertex 
+	list<int>::iterator i; 
+	for (i = adjLst[v].begin(); i != adjLst[v].end(); ++i) 
+		if (!visited[*i]) 
+			topologicalSortUtil(*i, visited, Stack); 
   
-    // Push current vertex to stack which stores result 
-    Stack.push(v); 
+	// Push current vertex to stack which stores result 
+	Stack.push(v); 
 } 
 
 // The function to do Topological Sort. It uses recursive  
@@ -106,23 +84,23 @@ void Graph::topologicalSortUtil(int v, bool visited[],
 void 
 Graph::topologicalSort() 
 { 
-    stack<int> Stack; 
+	stack<int> Stack; 
   
-    // Mark all the vertices as not visited 
-    bool *visited = new bool[vertexNum]; 
-    for (int i = 0; i < vertexNum; i++) 
+	// Mark all the vertices as not visited 
+	bool *visited = new bool[vertexNum]; 
+	for (int i = 0; i < vertexNum; i++) 
 		visited[i] = false; 
   
-    // Call the recursive helper function to store Topological 
-    // Sort starting from all vertices one by one 
-    for (int i = 0; i < vertexNum; i++) 
+	// Call the recursive helper function to store Topological 
+	// Sort starting from all vertices one by one 
+	for (int i = 0; i < vertexNum; i++) 
 		if (visited[i] == false) 
 			topologicalSortUtil(i, visited, Stack); 
   
-    // Print contents of stack 
-    while (Stack.empty() == false) { 
+	// Print contents of stack 
+	while (Stack.empty() == false) { 
 		cout << Stack.top() << " "; 
-		Stack.pop(); 
+		Stack.pop();
 	} 
 }
 
