@@ -5,6 +5,14 @@
 
 using namespace std;
 
+/*
+ 	1. spinLock creation with atomic_flag which guarantee synchronization without locks
+	2. class SpinLock {private: std::atomic_flag locked 
+		also contatin lock() unlock() functions:
+		lock( while(locked.test_and_set(std::memory_order_acquire){std::this_thread::yeld();}))
+		unlock(){locked.clear(std::memory_order_release)}}
+*/
+
 class SpinLock {
 	std::atomic_flag locked;
 public:

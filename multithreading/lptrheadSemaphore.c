@@ -3,6 +3,15 @@
 #include <pthread.h> 
 #include <semaphore.h> 
 #include <unistd.h> 
+
+/*
+	1. semaphore gives access to limited number of threads to some common resource
+	2. int sem_init(sem_t *sem, int pshared, unsigned int value); init unnamed semaphore
+	3. creat two thread with small delay 1 second
+	4. in shared resource wait more then time between process creation for example 2 seconds
+	5. check that second process don't access shared resource when first process was inside shared resource
+	6. pthread_joid() and sem_destroy(&mutex).
+*/
   
 sem_t mutex; 
   
@@ -13,7 +22,7 @@ void* thread(void* arg)
 	printf("\nEntered..\n"); 
   
 	//critical section 
-	sleep(4); 
+	sleep(2); 
       
 	//signal 
 	printf("\nJust Exiting...\n"); 
@@ -24,13 +33,13 @@ void* thread(void* arg)
   
 int main() 
 { 
-	//sem_init(&mutex, 0, 1); //depricated
+	sem_init(&mutex, 0, 1);
 	pthread_t t1,t2; 
 	pthread_create(&t1,NULL,thread,NULL); 
-	sleep(2); 	
+	sleep(1); 	
 	pthread_create(&t2,NULL,thread,NULL); 
 	pthread_join(t1,NULL); 
 	pthread_join(t2,NULL); 
-	//sem_destroy(&mutex); //depricated
+	sem_destroy(&mutex);
 	return 0; 
 } 

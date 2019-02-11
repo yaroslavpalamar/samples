@@ -6,8 +6,33 @@
 using namespace std;
 
 /*
+
+	Thread1_____________\
+			Worker1___________________________________________________________
+			       /|\						  	/|\
+				|							No
+(Common Resources)--------(handover the resource to other thread)<-YES--{is other Worker active?}
+				|							No
+			       \|/						  	\|/
+			Worker2__________________________________________________________
+	Thread2____________/
+
+
 	1. A real-world example of livelock occurs when two people meet in a narrow corridor
-	2. 
+	2. We have Worker class with worker() method which contain common resource, worker() give acces to many threads:
+		void work(CommonRes* comRes,Worker* othWorker,mutex*mtx)
+		Worker class contain methods:
+			getName(); getId(); isActive(); and constructor to init values: 
+				Worker (string name, bool active, int id)
+	3. Created obj of CommonRes class will be passed to different workers
+		CommonRes contain field Worker* owner; (should be set in constructor)
+		Also CommonRes have setter and getter for owner.
+	4. create two Workers object and pass Worker object and CommorRes obj to function: 
+		void work(CommonRes* comRes, Worker* othWorker, mutex*mtx)
+		inside this function will be logic from diargame above 
+			before access to common resource check for other thread if other thread 
+			try to acces give this access to other thread in result
+			you will get livelock every thread will always give access to other thread
 */
 
 class CommonRes;
@@ -38,8 +63,8 @@ public:
 };
 
 class CommonRes {
-public:
 	Worker* owner;
+public:
 	CommonRes(Worker* w) {
 		this->owner = w;
 	}
@@ -63,8 +88,8 @@ public:
 				this_thread::sleep_for(chrono::milliseconds(200));
 				continue;
 			}
-			// If you don't wan't to have livelock just comment out from lines (62-66) and (82-86) 
-			// also uncomment line 80,81 for sequetially execution.
+			// If you don't wan't to have livelock give access to common resource consistently 
+			// and don't handover, this code should be rewriten 
 			if (othWorker->isActive()) {
 				cout << "handover resource to worker " << othWorker->getName()<< endl;
 				comRes->setOwner(othWorker, mtx1);
@@ -81,15 +106,13 @@ public:
 
 int main()
 {
-	mutex mtx1;					//COMMENT OUT TO FIX LIVELOCK
-	mutex mtx2;					//COMMENT OUT
-	Worker w1("w1", true, 1);			//COMMENT OUT
-	Worker w2("w2", true, 2);			//COMMENT OUT
-	CommonRes cR(&w1);				//COMMENT OUT
-	//w1.work(&cR, &w2, &mtx1);			//UNCOMMENT   TO FIX LIVELOCK
-	//w2.work(&cR, &w1, &mtx2);			//UNCOMMENT   TO FIX LIVELOCK
-	thread t1(&Worker::work, &w1, &cR, &w2, &mtx1);	//COMMENT OUT
-	thread t2(&Worker::work, &w2, &cR, &w1, &mtx2);	//COMMENT OUT TO FIX LIVELOCK
+	mutex mtx1;
+	mutex mtx2;	
+	Worker w1("w1", true, 1);
+	Worker w2("w2", true, 2);
+	CommonRes cR(&w1);
+	thread t1(&Worker::work, &w1, &cR, &w2, &mtx1);
+	thread t2(&Worker::work, &w2, &cR, &w1, &mtx2);	
 	t1.join();
 	t2.join();
 

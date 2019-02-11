@@ -6,6 +6,13 @@
 
 using namespace std;
 
+/*
+	1. Semaphore class contain private fields std::mutex mtx; std::condition_variable cv; int count;
+	2. And two public methods:
+		constructor Semaphore to init count variable with number of threads that can access common code
+		wait(){unique_lock<mutext>lock(mtx) while(count==0){cv.wait(lock);}count--;}
+		notify(){unique_lock...lock(mtx); count++; cv.notify_one;}
+*/
 class Semaphore {
 public:
 	Semaphore (int count_ = 0) : count(count_) 
