@@ -1,6 +1,12 @@
 #include <iostream>
 using namespace std;
 
+/*
+	1. bubble sort algo in loop go through all values 
+	2. inside second loop go through 0 val to arrSize -i -1
+	3. if arr[i] > arr[j+1] swap;
+*/
+
 void swap (int *a, int *b)
 {
 	int tmp = *a;

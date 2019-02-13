@@ -1,6 +1,18 @@
 #include <iostream>
 using namespace std;
 
+/*
+	insertion sort
+	1. define two variable keyVal and iPrev
+	2. loop from 1 element to arrSize for(i=1;i<arrSize;i++)
+		save element in index [1] to keyVal keyVal=arr[i];
+		in iPrev seve index to prev element
+			Now you can move back to the beginning array and compare key Value with prevous
+			if less than previous just swap the values 
+				while (iPrev >= 0 && arr[iPrev] > keyVal) {arr[iPrev+1] = arr[iPrev];
+										iPrev = iPrev-1;}
+			arr[iPrev+1]=keyVal;
+*/
 void insertionSort(int* arr, int arrSize)
 {
 	int keyVal, iPrev;
