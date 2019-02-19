@@ -21,7 +21,7 @@ using namespace std;
 			 and pass two parameters (data, head) to init pNext with head
 		insert(int index, T val);  //defne prev pointer and assign it to head then check if index ==0 call pop_front
 			else loop untill index and assigh prev then create new Node
-		removeAt(int index); /defne prev pointer and assign it to head then check if index ==0 call push_front
+		removeAt(int index); /defne prev pointer and assign it to head then check if index ==0 call poo_front
 			else loop untill index and assign prev tnen delete new Node
 			define new pointer assign prev to that pointer, prev assignt to next and remove this pointer
 		pop_back(); call removeAt(size-1)

@@ -10,11 +10,11 @@ using namespace std;
  * Part of code to display graph represented by adjacency list 
  * and Dijkstra algorithm based on priority queue to traverse the graph and search for shortest path. 
  * Complexity O(ElogV)) because O(E) vertices in priority_queue and O(log E) is same as O(log V)
- *	1. class Graph with int VertexNm and list<pair<int,int>>*adjList; 
+ *	1. class Graph with int VertexNum and list<pair<int,int>>*adjList; 
 	2. constructor init adjList allocate memory and init vertexNum;
 	3. addEdge(int v1, int v2, int w) init pair adjLst[v1].push_back(make_pair(v2, w));
 	4. dijkstraShortPath (int startVert) {
-		priority_queue<pair, vector<pair<int,int>>, greater<pari<..>> pq;
+		priority_queue<pair, vector<pair<int,int>>, greater<pair<..>> pq;
 		const int INF=0xfffffff; vector<int> dist(vertexNum, INF) init vector by infinity
 		pq.push(make_pair(0,startVert))
 		dist[startVert] = 0; // dist to first element init to 0

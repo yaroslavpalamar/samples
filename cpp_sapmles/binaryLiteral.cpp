@@ -7,7 +7,7 @@ using namespace std;
  * 2. std::bitset or "0b" prefix for binary representation or use conversion function.
  * 3. intToBin() input int value and pointer to bool array, return length of bits in bin form
  * 4. intToBin() impl:
- * 	 Inside cycle: 
+ * 	 Inside while(iVal>0) cycle: 
  * 	 	1) divide by module and save the reminder to array 
  * 	 	2) divide input val by 2
  * 	 	3) return size of cycle iteration

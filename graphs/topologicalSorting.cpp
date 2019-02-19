@@ -23,7 +23,7 @@ using namespace std;
 			if !visited
 				topologicalSortUtil(*i, visited, Stack);
 		stack.push(i)}
-   2. In while loop print al vertexes in stack
+   2. In while loop print all vertexes in stack
  *
  * */
 

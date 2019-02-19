@@ -9,7 +9,7 @@ using namespace std;
 	2. const int ALPHABET_SIZE=26
 	3. TrieNode *getNode(void) return new trie node
 		pNode = newTrieNode; pNode->isEndOfWord = false;
-		init all children to 0 for(int i =0; i < ALPHABET_SIZE; I++) children[i]NULL
+		init all children to 0 for(int i =0; i < ALPHABET_SIZE; i++) children[i]NULL
 		retrun p pNode;
 	4. void insert(struct TrieNode *root, string key)
 		for (int i = 0; i < key.length(); i++) { 

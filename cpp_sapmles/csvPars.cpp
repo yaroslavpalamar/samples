@@ -10,7 +10,7 @@ using namespace std;
 		while (getline(buf, token, ',')) to parse the line (buf type is istringstream)
 	3. For deletion you can create two files and copy everything from one file to another without deleted rows.
 		After that remove old file and rename new file to old one.
-	4. Append dtata useing ofstream and operator << outfile << "Data"; 
+	4. Append dtata using ofstream and operator << outfile << "Data"; 
 */
 
 const string FILENAME = "test.csv";

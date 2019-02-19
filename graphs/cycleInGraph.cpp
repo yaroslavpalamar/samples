@@ -6,7 +6,7 @@
 using namespace std;
 
 /*
-	1. With DFS we cah check whether graph cyclic 
+	1. With DFS we can check whether graph cyclic 
 	2. Inside function isCyclic() will add vector<bool> recToParent(vertexNum,false)
 		inside while(!stack.empty) {if(!visited[startVert]){recToParent[startVert]=true; vis..[st..]=true}}
 		inside for(it=begin;it!=end;it++){if(recToParent[it]==true) return true}

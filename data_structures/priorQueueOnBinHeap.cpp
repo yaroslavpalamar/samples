@@ -6,7 +6,7 @@ using namespace std;
 
 /*
 	1. minHeap class contain next functions:
-		private left(2*i+2), right(2*i+1),
+		private left(2*i+1), right(2*i+2),
 		heapify() {firstly find left() and right() indexes 
 			define smallest or biggest element in array and assign it to index,
 			
@@ -22,7 +22,7 @@ using namespace std;
 	4. push()
 		pop(call heapify())
 		deleteKey() call replaceKey(INT_MIN)
-	5. sort( for(int i=heapSize, i>=0;--i {swap(arr[0][i]-move to end) call hepify(0,i))} ))
+	5. sort( for(int i=heapSize, i>=0;--i {swap(arr[0], arr[i])-move current root to end) call hepify(0,i))} ))
 
 */
 
