@@ -1,6 +1,16 @@
 #include <iostream>
 using namespace std;
 
+/*
+	1. selection sort function input val arr and size of zrr
+	2. define int minIdx variable;
+	3. in loop for (int i=0; i< arrSize; ++i) { minIdx=i;
+				for (int j = i+1; j< arrSize; j++)
+					if (arr[j] < arr[minIdx]) minIdx=j;
+				swap(arr[minIdx], arr[j]);
+			}
+*/
+
 void swap (int *a, int *b)
 {
 	int tmp = *a;
