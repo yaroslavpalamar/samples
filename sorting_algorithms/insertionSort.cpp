@@ -2,7 +2,8 @@
 using namespace std;
 
 /*
-	insertion sort
+	insertion sort example: [4,2,5,0] 1.step: key=2, iP=0; 2,4,5,0  2.step: key=5, iP=1 [2,4,5,0]
+						3.setp: iP=2, key=0 [2,4,5,5]; -> iP=1 [2,4,4,5]-> iP=0 [2,2,4,5] ->iP=-1 [0,2,4,5]
 	1. define two variable keyVal and iPrev
 	2. loop from 1 element to arrSize for(i=1;i<arrSize;i++)
 		save element to keyVal=arr[i];

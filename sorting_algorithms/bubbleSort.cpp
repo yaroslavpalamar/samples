@@ -2,9 +2,11 @@
 using namespace std;
 
 /*
-	1. bubble sort algo in loop go through all values 
-	2. inside second loop go through 0 val to arrSize -i -1
-	3. if arr[i] > arr[j+1] swap;
+	1. example: [4,0,5,2] 1step: [0,4,5,2], [0,4,5,2], [0,4,2,5]; 
+		2step: [0,4,2,5], [0,2,4,5]. 3step: [0,2,4,5]
+	2. bubble sort algo in loop go through all values 
+	3. inside second loop go through 0 val to arrSize -i -1
+	4. if arr[i] > arr[j+1] swap;
 */
 
 void swap (int *a, int *b)
@@ -16,7 +18,7 @@ void swap (int *a, int *b)
 
 void bubbleSort(int* arr, int arrSize)
 {
-	for (int i=0; i< arrSize-1; ++i) {
+	for (int i=0; i < arrSize-1; ++i) {
 		for (int j=0; j<arrSize-i-1; ++j) {
 			if (arr[j] > arr[j+1])
 				swap(arr[j], arr[j+1]);
