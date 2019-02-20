@@ -1,6 +1,15 @@
 #include<iostream> 
 using namespace std; 
-  
+ 
+/*
+	1. radix sort example: [3,99,1,4] 
+	2. getMax() element return 59.
+	3. for (int exp = 1; m/exp > 0; exp *= 10) {
+			countSort(arr, n, exp) //first time exp will be 1, second 10 (if m==59)
+		} 
+	In result will have two calls of countSort() with next steps:
+*/
+ 
 // A utility function to get maximum value in arr[] 
 int getMax(int arr[], int n) 
 { 
@@ -20,7 +29,7 @@ void countSort(int arr[], int n, int exp)
   
 	// Store count of occurrences in count[] 
 	for (i = 0; i < n; i++) 
-		count[ (arr[i]/exp)%10 ]++; 
+		count[ (arr[i]/exp)%10 ]++;
   
 	// Change count[i] so that count[i] now contains actual 
 	//  position of this digit in output[] 
