@@ -1,6 +1,27 @@
 #include <iostream>
 using namespace std;
 
+/*	
+	merge sort iterative impl:
+	1. example: [4,5,0,2] 
+	2. iterMergeSort (for(int curSize=1; curSize<=arrSize-1; curSize=2*CurSize){    //1step: curSize=1; 2step: curSize=2;
+		for (int leftStart=0; leftStart < arrSize-1; leftStart += 2*curSize) { //1step: lS=0 2step: lS=2; 3step:lS=0; 
+			int mid = leftStart + curSize-1; //1:mid = 0 2:mid=2; 3:mid=1
+			int rightEnd = min(leftStart + 2*curSize - 1, arrSize - 1); //1: rightEnd=1; 2: rightEnd=3 3: rightEnd=3
+			mergeParts(arr, leftStart, mid, rightEnd); }
+		}
+	
+	merge sort recurs impl:
+	1. example: [4,5,0,2]
+	2. Call function mergeSortRecurs(arr, 0, arrSize-1); //iLeft = 0; iRight = 3;
+	3. if (iLeft < iRight) {
+		int iMed = iLeft + (iRight-iLeft)/2; // 1s: iMid=1 2s: iMid=2
+		mergeSortRecurs(arr, iMed+1, iRight); // 1s: 2,3 2s: 3,3..
+		mergeSortRecurs(arr, iLeft, iMed); // 1s: iL=2 iM=2
+		mergeParts (arr, iLeft, iMed, iRight);
+	} 
+*/
+
 void mergeParts(int* arr, int iLeft, int iMed, int iRight)
 {
 	// copy data to to the tmp subarreys
@@ -60,9 +81,9 @@ int min(int x, int y)
 void printArr(int* arr, int arrSize);
 void mergeSortIterative(int *arr, int arrSize)
 {
-	int leftStart;
 	for (int curSize=1; curSize <= arrSize-1; curSize = 2*curSize) {
-		for (leftStart=0; leftStart < arrSize-1; leftStart += 2*curSize) {
+		//cout << "test"<< curSize << endl;
+		for (int leftStart=0; leftStart < arrSize-1; leftStart += 2*curSize) {
 			int mid = leftStart + curSize-1;
 			int rightEnd = min(leftStart + 2*curSize - 1, arrSize - 1);
 			mergeParts(arr, leftStart, mid, rightEnd);
