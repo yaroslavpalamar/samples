@@ -3,10 +3,14 @@ using namespace std;
 
 /*
 	GCD (Greatest Common Divisor) or HCF (Highest Common Factor)
-	GCD for 36,48 is 12.
-	
-	LCM (Least Common Multiple)
-	LCM is 36*48/12=144
+	example: GCD for 36,48 is 12.
+	1. A simple solution is to find all prime factors of both numbers, but better 
+		to use Euclidian algorithm to divide by modulo
+	2. gcd(a,b){if (b==0) return a; 
+				return gcd(b, a%b);}
+	3. LCM (Least Common Multiple) 
+		lcm(int a, int b) {return a*b/gcd(a,b);}
+		LCM sample: 36*48/12=144
 */
 
 // Euclidian algorithm to divide:
@@ -17,6 +21,7 @@ int gcd (int a, int b)
 	return gcd(b, a%b);
 }
 
+// A simple solution is to find all prime factors of both numbers.
 // If we subtract smaller number from larger (we reduce larger number), GCD doesn’t change.
 int gcdRecurs (int a, int b)
 {
