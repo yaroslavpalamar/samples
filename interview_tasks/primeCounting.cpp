@@ -1,7 +1,5 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
-#include <math.h>
 using namespace std;
 
 /*
@@ -12,17 +10,25 @@ using namespace std;
  * */
 
 int prime_counting(int n) {
-	int result=0;
-    for (long long i = 2; i <= n; i++) {
-    	if ((n % i)==0) {
-    		result++;
-    	}
-    }
-    return result;
+	if (n < 2) {
+		return 0;
+	}
+	vector<bool> isPrime(n+1, true);
+	int result = 0;
+	for (int i = 2; i <= n; i++) {
+		if (isPrime[i]) {
+			result += 1;
+			// This is needed to avoid type overflows on j
+			for (long long j = (long long)i*i; j <= n; j += i) {
+				isPrime[j] = false;
+			}
+		}
+	}
+	return result;
 }
 
 int main() {
-	const long long N = 31;
+	const long long N = 10;
 	//const long long N = 64;
 	cout << prime_counting(N) << endl;
 	return 0;
