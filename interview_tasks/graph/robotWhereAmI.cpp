@@ -1,3 +1,11 @@
+//#include <bits/stdc++.h>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <queue>
+#include <tuple>
+
+using namespace std;
 /*
 	1. The robot is always dropped on an empty cell. 
 		It has in its memory a map of the whole field but it does not know where it is on that map.
@@ -37,3 +45,82 @@ SAMPLE OUTPUT
 
 8
 */
+
+struct Pos {
+  int x, y;
+  int d;
+  bool operator==(const Pos &that) const {
+    return x == that.x && y == that.y;
+  }
+};
+int n, m, p, q;
+Pos s, f;
+
+int bfs(const vector<string> &g, int x, int y)
+{
+  vector<vector<bool>> visited(n, vector<bool>(m, false));
+  queue<Pos> q;
+  q.push(Pos{x, y, 0});
+  while (!q.empty()) {
+    Pos p = q.front();
+    q.pop();
+    if (p == f) return p.d;
+    if (visited[p.x][p.y]) continue;
+    visited[p.x][p.y] = true;
+    int offset[4][2] = {{1, 0}, {-1, 0}, {0, 1}, {0, -1}};
+    for (int i = 0; i < 4; i++) {
+      int x = p.x + offset[i][0];
+      int y = p.y + offset[i][1];
+      if (x < 0 || y < 0 || x >= n || y >= m || visited[x][y] || g[x][y] == '1') continue;
+      q.push(Pos{x, y, p.d + 1});
+    }
+  }
+  return -1;
+}
+
+int solve(const vector<string> &g, const vector<string> &pos)
+{
+  int maxlen = -1;
+  for (int i = 0; i < n; i++) {
+    for (int j = 0; j < m; j++) {
+      bool ok = true;
+      for (int k = 0; ok && k < p; k++) {
+        for (int l = 0; ok && l < q; l++) {
+          if (i+k >= n || j+l >= m || g[i+k][j+l] != pos[k][l]) ok = false;
+        }
+      }
+      if (!ok) continue;
+      int len = bfs(g, s.x + i, s.y + j);
+      // cerr << s.x+i << "," << s.y+j << "=" << len << endl;
+      if (len < 0) return -2;
+      maxlen = max(maxlen, len);
+    }
+  }
+  return maxlen;
+}
+
+int main()
+{
+    cin >> n >> m >> p >> q >> f.x >> f.y;
+    f.x--; f.y--;
+    vector<string> g(n);
+    vector<string> pos(p);
+    for (int i = 0; i < n; i++) {
+      cin >> g[i];
+    }
+    for (int i = 0; i < p; i++) {
+      cin >> pos[i];
+      for (int j = 0; j < q; j++) {
+        if (pos[i][j] == '2') {
+          s.x = i;
+          s.y = j;
+          pos[i][j] = '0';
+        }
+      }
+    }
+    cout << solve(g, pos) << endl;
+    return 0;
+}
+
+
+
