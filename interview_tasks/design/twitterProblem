@@ -51,9 +51,63 @@ This means that on average the app will receive around 1150 requests per second.
 which handles initial traffic and sends requests to a set of servers running one or more instances of the application.
 -Behind the load balancer we will be running a set of servers that are running our application and are capable of handling the different requests that arrive.
 _________________
-Storing the data
+Storing the data (count limits based on our preconditions)
 We need to store data about our users and their tweets to make the application complete.
 Obviously, there are some relations between our data objects - users and tweets. 
 Let’s assess the approximate size of the data to be stored. 
 We said that we expect around 10 million users. 
+For each user we have some profile to store the data 
+-Tweets will be generated 10 million per day sot it will be around 115 per second. For a year it will be 3.65 billion per year.
+So, let’s aim for a solution that can store efficiently at least 10 billion tweets for now and the incoming traffic mentioned above.
+-1 tweet max 140 characters so we should store 140*10billion characters = 1.4 trillion  
+  or around 2.8 terabytes if we assume 2 bytes per character(if java and UTF-18) and no compression of the data.
+-also there will be connectino between profiles about 2 billiion
+  and each connection will most likely just contain two IDs of users where the first follows the second
+   it would be enough to store two 4-byte integer fields, making 8 * 2 bln = 16 bln bytes or 16 gigabytes.
+-The favorites are expected to grow at a rate of 20 mln per day. So, for a year there will be 7.3 bln such actions. 
+  Let’s say we want to be able to store at least 20 bln such objects that poit to one user and one tweet 
+  one tweet 8 byte and for user 4 byte so in result will be (4+8)*20 bln so will have 240 gigabytes.
+2.6 - 2.7 terabytes. Real-life examples show that famous companies like Twitter and 
+Facebook manage to use relational databases for handling much bigger loads than that.
+------------------------------------
+Database schema - draft the tables and the relations between them?
+We have two main entities: users and tweets. There could be two tables for them.
+Table users:
+-ID (id)
+-username (username)
+-full name (first_name & last_name)
+-password related fields like hash and salt (password_hash & password_salt)
+-date of creation and last update (created_at & updated_at)
+-description (description)
+-and maybe some other fields...
+
+Tweets should be slightly simpler:
+Table tweets:
+-ID (id)
+-content (content)
+-date of creation (created_at)
+-user ID of author (user_id)
+
+These two entities have several types of relations between them:
+users create tweets
+users can follow users
+users favorite tweets
+------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
