@@ -93,13 +93,27 @@ users create tweets
 users can follow users
 users favorite tweets
 ------------------------------------
-
-
-
-
-
-
-
+Starting with the basics there will be queries for retrieving the details of a given user. Our users’ table above has both id and username fields. 
+The next popular query will fetch tweets for a given user. The query needed for doing that will filter tweets using user_id, which every tweet has.
+For each user we will want to show the users that they follow and the users that follow them. For this we will need the table connections. To get the users followed by someone we can simply filter the connections table by the column follower_id. To get the users following someone we can filter by followee_id. All this means that it will make a lot of sense to build two indexes in this table - one on follower_id and another one on followee_id. 
+---------------
+Building a RESTful API
+We have a simple plan for what our schema will be like. Another thing that our interviewer could be interested in is how our front-end would “talk” to the back-end system. Probably the most popular answer nowadays would be by exposing a RESTful API on the back-end side, which has a few endpoints returning JSON objects as responses. 
+GET /api/users/<username>
+GET /api/users/<username>/tweets
+GET /api/users/<username>/followers
+GET /api/users/<username>/followees
+Let’s look at creating new data. For example we will need an endpoint for posting a new tweet:
+POST /api/users/<username>/tweets
+---------
+Increased number of read requests
+We have our implementation of the system and it handles everything perfectly. But what would happen if suddenly we got lucky and people started visiting our application 5 times more often generating 5 times more read requests caused by viewing posts and user profiles. What would be the first place that will most likely become a bottleneck?
+One very natural answer is our database. It could become overwhelmed with all the read requests coming to it. One typical way to handle more read requests would be to use replication. This way we could increase the number of database instances that hold a copy of the data and allow the application to read this data. 
+One of the reasons why using the services of a company like Amazon or Heroku could be beneficial is that they make it easy to add new machines to your environment. You just need to have the money to pay for them.
+Finally, if all else is scaled and capable of handling the increased loads we may need to improve our load balancing solution. 
+---------
+Scaling the database
+We just touched on that aspect but let’s talk a bit more about it. Let’s say our application needs to be able to store even more data and the read/write requests per second are increased significantly. If we are using a relational database with the proper indexes running on a single machine it could very quickly become unable to handle the loads that our application experiences. One approach mentioned above is to add an in-memory cache solution in front of the database with the goal to not send repeated read requests to the database itself. We could use a key-value store like memcached to handle that.
 
 
 
