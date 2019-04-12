@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -13,7 +14,22 @@ using namespace std;
 		This is because the new interval [4,9] overlaps with [3,5],[6,7],[8,10]
  */
  
- 
+ /*
+	How to solve it:
+	1 Given all the intervals, you need to figure out the sequence of intervals which intersect with the given newInterval.
+	Lets see how we check if interval 1 (a,b) intersects with interval 2 (c,d):
+	2 Overlap case :
+    a---------------------b                      OR       a------b
+                c-------------------d                c------------------d
+				
+	3 Non overlap case :
+    a--------------------b   c------------------d
+	
+	4 Note that if max(a,c) > min(b,d), then the intervals do not overlap. Otherwise, they overlap.
+	5 Once we figure out the intervals ( interval[i] to interval[j] ) which overlap with newInterval, 
+		note that we can replace all the overlapping intervals with one interval which would be
+		(min(interval[i].start, newInterval.start), max(interval[j].end, newInterval.end)).
+ */
  
  
 class Solution {
@@ -27,11 +43,43 @@ public:
 	    Interval(int s, int e) : start(s), end(e) {}
 	};
 	/**/
+/**
+ * Definition for an interval.
+ * struct Interval {
+ *     int start;
+ *     int end;
+ *     Interval() : start(0), end(0) {}
+ *     Interval(int s, int e) : start(s), end(e) {}
+ * };
+ */
+	bool cmp(Interval a,Interval b)
+	{
+		return a.start<=b.start;
+	}
 	vector<Interval> insert(vector<Interval> &intervals, Interval newInterval) {
-		// Do not write main() function.
-		// Do not read input, instead use the arguments to the function.
-		// Do not print the output, instead return values as specified
-		// Still have a doubt. Checkout www.interviewbit.com/pages/sample_codes/ for more details
+		int i,j,n=intervals.size();
+		int b=newInterval.start;
+		int e=newInterval.end;
+		intervals.push_back(newInterval);
+		sort(intervals.begin(),intervals.end(),cmp);
+		//now merge
+		i=1,j=0;
+		while(i<intervals.size())
+		{
+			if(intervals[j].end>=intervals[i].start)
+			{
+				//merge
+				intervals[j].end=max(intervals[i].end,intervals[j].end);
+			}
+			else
+			{
+				j++;
+				intervals[j]=intervals[i];
+			}
+			i++;
+		}
+		intervals.erase(intervals.begin()+j+1,intervals.end());
+		return intervals;
 	}
 };
 
