@@ -47,16 +47,16 @@ r ---> Size of a combination to be printed
 index ---> Current index in data[]  
 data[] ---> Temporary array to store current combination  
 i ---> index of current element in arr[] */
-void pascalCombinationUtil(int arr[], int n, int r,  
+void pascalCombinationUtil(int arr[], int n, const int elemSiz,  
                     int iData, int data[], int iArr)  
 {  
     // Current cobination is ready, print it  
-    if (iData == r)  
+    if (iData == elemSiz)  
     {  
-        for (int j = 0; j < r; j++)  
+        for (int j = 0; j < elemSiz; j++)  
             cout << data[j] << " ";  
         cout << endl;  
-        return;  
+        return;
     }  
   
     // When no more elements are there to put in data[]  
@@ -65,27 +65,27 @@ void pascalCombinationUtil(int arr[], int n, int r,
   
     // current is included, put next at next location  
     data[iData] = arr[iArr];  
-    pascalCombinationUtil(arr, n, r, iData + 1, data, iArr+1);  
+    pascalCombinationUtil(arr, n, elemSiz, iData + 1, data, iArr+1);  
   
     // current is excluded, replace it with next (Note that  
     // i+1 is passed, but iData is not changed)  
-    pascalCombinationUtil(arr, n, r, iData, data, iArr+1);  
+    pascalCombinationUtil(arr, n, elemSiz, iData, data, iArr+1);  
 }   
 
-void pascalPrintCombination(int arr[], int aSiz, int elemSiz)  
+void pascalPrintCombination(int arr[], int aSiz, const int elemSiz)  
 {  
-    int data[elemSiz];  
+    int data[elemSiz];
     pascalCombinationUtil(arr, aSiz, elemSiz, 0, data, 0);
 } 
 
 int main()  
 {  
 	int arr[] = {1, 2, 3, 4, 5};  
-	int r = 3;  
+	const int elSiz = 3;  
 	int n = sizeof(arr)/sizeof(arr[0]);  
-    	printCombination(arr, n, r);
+    	printCombination(arr, n, elSiz);
 	
 	cout << "Pascal impl" << endl;
-	pascalPrintCombination(arr, n, r);
+	pascalPrintCombination(arr, n, elSiz);
 }
 
