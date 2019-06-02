@@ -1,6 +1,4 @@
 #include <iostream>
-#include <stdlib.h>
-using namespace std;
 
 // function to check whether x is numeric 
 bool isNumericChar(char x) 
@@ -41,10 +39,10 @@ int
 main (int argc, char**argv)
 {
 	char test2[] = "-2354679abc";
-	cout << "test output for atoi function from stdlib.h: "
-		 << atoi(test2) << endl;
-	cout <<"test output for implemetated atoi2 fuction: "
-		<< atoi2(test2) << endl;
+	std::cout << "test output for atoi function from stdlib.h: "
+		 << atoi(test2) << '\n';
+	std::cout <<"test output for implemetated atoi2 fuction: "
+		<< atoi2(test2) << '\n';
 	return 0;
 }
 
