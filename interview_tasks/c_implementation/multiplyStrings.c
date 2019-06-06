@@ -4,8 +4,8 @@
 #define ALLOWED_ARGS_NUM 3
 
 /*
-Input: num1 = "123", num2 = "456"
-Output: "56088"
+Input: num1 = "3", num2 = "40"
+Output: "120"
 */
 
 
@@ -16,6 +16,11 @@ char* multiply(const char* num1, const char* num2){
 	int len2 = strlen(num2);
 	int len = len1+len2;
 	char *arr = (char*)calloc(sizeof(char)*(len+1), sizeof(char));
+	
+	if (!arr) {
+		printf ("Memory can't be allocated.");
+		return NULL;
+	}
 
 	// multiply and save result in arr but not in ascii format.
 	for(int i=len1-1; i > -1; i--) {
@@ -55,6 +60,7 @@ main(int argc, char**argv)
 	}
 	char* result = multiply(argv[1], argv[2]);
 	printf("%s\n", result);
-	free(result);
+	if (result)
+		free(result);
 	return 0;
 }
