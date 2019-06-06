@@ -10,7 +10,7 @@ Output: "120"
 
 
 char* multiply(const char* num1, const char* num2){
-	if(*num1=='0' || *num2=='0') 
+	if(*num1=='0' || *num2=='0')
 		return "0";
 	int len1 = strlen(num1);
 	int len2 = strlen(num2);
@@ -57,8 +57,12 @@ main(int argc, char**argv)
 		return 1;
 	}
 	char* result = multiply(argv[1], argv[2]);
+	if (!result)
+		return 1;
+
 	printf("%s\n", result);
-	if (result)
+	if (*result !='0')
 		free(result);
+
 	return 0;
 }
