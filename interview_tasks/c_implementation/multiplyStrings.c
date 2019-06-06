@@ -26,16 +26,14 @@ char* multiply(const char* num1, const char* num2){
 	for(int i=len1-1; i > -1; i--) {
 		for(int j=len2-1; j > -1; j--) {
 			arr[i+j+1] += (num1[i]-'0')*(num2[j]-'0');
-			//printf("%d\n",arr[i+j+1]);
-		}
-		for(int i=len-1; i > 0; i--) {
-			arr[i-1] += arr[i]/10;
-			arr[i] %= 10;
-			//printf("%d\n",arr[i]);
+			printf("1, %d\n",arr[i+j+1]);
+			arr[i+j] += arr[i+j+1]/10;
+			arr[i+j+1] %= 10;
+			printf("2, %d\n",arr[i+j]);
+			printf("3, %d\n",arr[i+j+1]);
 		}
 	}
 
-	
 	// ignore first byte if it 0.
 	int i = 0;
 	if(arr[i]==0) 
