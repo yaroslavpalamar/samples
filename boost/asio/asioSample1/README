@@ -1,0 +1,8 @@
+to compile proj:
+1. create build directory
+2. cd build
+3. cmake .. 
+	(cmake path (inside the path should be CMakeLists.txt))
+2. boost and gtest  should be installed because of dependencies
+3. make
+4. if no errors run example binary.
