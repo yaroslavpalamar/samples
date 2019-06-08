@@ -40,10 +40,14 @@ file(COPY ${data} DESTINATION resources)
 
 # This defines the variables Boost_LIBRARIES that containts all library names
 # that we need to link into the program.
-find_package(Boost COMPONENTS filesystem REQUIRED)
+find_package(Boost COMPONENTS REQUIRED system thread regex filesystem)
 include_directories(${Boost_INCLUDE_DIRS})
 target_link_libraries(example
   ${Boost_FILESYSTEM_LIBRARY}
+  ${Boost_SYSTEM_LIBRARY}
+  ${Boost_THREAD_LIBRARY} 
+  
+  ${Boost_REGEX_LIBRARY} 
   # here you can add any library dependencies
 )
 
