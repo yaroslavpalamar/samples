@@ -1,10 +1,9 @@
 #include <iostream>
 #include "bloomFilter.hpp"
+#include <fstream>
 
-
-int main()
-{
-	BloomFilter filter(10000, 10);
+void bloomFilterTest1() {
+	BloomFilter filter(33548945, 23);
 	std::string str_list[] = { "AbC", "iJk", "XYZ" };
 
 	/* Insert into Bloom Filter */
@@ -51,6 +50,95 @@ int main()
 		if (filter.check(i)) {
 			std::cout << "BF falsely contains: " << i << std::endl;
 		}
+	}
+}
+
+template <class T, class Allocator,
+          template <class,class> class Container>
+bool readFile(const std::string& fileName, Container<T, Allocator>& c)
+{
+	std::ifstream stream(fileName.c_str());
+	if (!stream) {   
+		std::cout << "Error: Failed to open file '" << fileName << "'" << std::endl;
+		return false;
+	}
+
+	std::string buffer;
+	while (std::getline(stream, buffer)) {
+		c.push_back(buffer);
+	}
+
+	return true;
+}
+
+bool loadWords(std::vector<std::string>& wordList, std::string& fileName)
+{
+	std::cout << "Loading words from " << fileName << ".....";
+
+	if (!readFile(fileName,wordList)) {
+		return false;
+	}
+
+	if (wordList.empty()) {
+		std::cout << "No word list - Either none requested, or desired word list could not be loaded." << std::endl;
+		return false;
+	} else
+		std::cout << " Complete." << std::endl;
+
+	return true;
+}
+
+
+/*
+	return false in case if file loading not finished
+*/
+bool bloomFilterTest2() {
+	BloomFilter filter(33548945, 23);
+
+	std::vector<std::string> wordsInFilter;
+	std::string inputFile = "h1.txt";
+	if (!loadWords(wordsInFilter, inputFile)) {   
+		return 0;
+	}
+	int wordsSize = wordsInFilter.size();
+	for (int i = 0; i < wordsSize; ++i) {
+		filter.insert(wordsInFilter[i]);
+	}
+
+
+	std::vector<std::string> wordsToFind;
+	std::string checkFile = "h2.txt";
+	if (!loadWords(wordsToFind, checkFile)) {   
+		return 0;
+	}
+	int sizeToCheck = wordsToFind.size();
+	for (int i = 0; i < sizeToCheck; ++i) {
+		if (filter.check(wordsToFind[i])) {
+			std::cout << "BF contains: " << wordsToFind[i] << std::endl;
+		}
+	}
+
+	std::vector<std::string> falseWords;
+	std::string falseWordsFile = "random-list.txt";
+	if (!loadWords(falseWords, falseWordsFile)) {   
+		return 0;
+	}
+	int sizeFalseWords = falseWords.size();
+	for (int i = 0; i < sizeFalseWords; ++i) {
+		if (filter.check(falseWords[i])) {
+			std::cout << "BF false contains: " << falseWords[i] << std::endl;
+		}
+	}
+
+	return 1;
+}
+
+int main()
+{
+	bloomFilterTest1(); 
+	
+	if (!bloomFilterTest2()) {
+		return 1;
 	}
 
 	return 0;
