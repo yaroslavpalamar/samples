@@ -4,48 +4,15 @@
 #include <vector>
 #include <array>
 #include "bloomFilterTask.hpp"
-#include "MurmurHash3.h"
+#include "hashGen.hpp"
+#include "bitVector.hpp"
 
-/*
-	Based on article below we need to use two hash functions h1(x) and 
-		h2(x) to simulate additional hash functions of the form: 
-		gi(x) = h1(x) + ih2(x)
-	To get two hash function have been used next function MurmurHash3_x64_128 from library:
-		https://github.com/aappleby/smhasher
-		MurmurHash3_x64_128 function generates a 128 bit hash, and we need 2 64 bit hashes, 
-		we can split the returned hash in half to get hasha(x) and hashb(x) 
-	Article - http://citeseer.ist.psu.edu/viewdoc/download;jsessionid=4060353E67A356EF9528D2C57C064F5A?doi=10.1.1.152.579&rep=rep1&type=pdf 
-*/
-class HashGenerator {
-	std::array<uint64_t, 2> hashValue;
-public:
-	HashGenerator(const uint8_t *data, std::size_t len) {
-		MurmurHash3_x64_128(data, len, 0, hashValue.data());
-	}
-
-	uint64_t nthHash(uint8_t n, uint64_t filterSize) {
-		uint64_t hashA = hashValue[0];
-		uint64_t hashB = hashValue[1];
-        	return (hashA + n * hashB) % filterSize;
-	}
-};
-
-
-/*
-	k - number of hash functions
-	bitVector - base data structure of a Bloom filter
-*/
+/// Bloom filter sample with insert and check operations
 class BloomFilter {
 	std::vector<bool> bitVector;
 	uint8_t k;
 
-public:
-	BloomFilter(uint64_t m, uint8_t k) : bitVector(m, false)
-	{
-		this->k = k;
-	}
-	
-	void insert(const unsigned char* data, const std::size_t& len) 
+	void insert(const uint8_t* data, const std::size_t& len) 
 	{
 		HashGenerator hash(data, len);
         	for (int n = 0; n < k; n++) {
@@ -53,13 +20,7 @@ public:
         	}
 	}
 
-	void insert(const std::string& key) 
-	{
-		insert(reinterpret_cast<const unsigned char*>(key.data()),key.size());
-	}
-
-	
-	bool check(const unsigned char *data, const std::size_t& len) const 
+	bool check(const uint8_t *data, const std::size_t& len) const 
 	{
 		HashGenerator hash(data, len);
 		for (int n = 0; n < k; n++) {
@@ -69,12 +30,30 @@ public:
         	}
 	        return true;
 	}
+public:
+	/// Construct a bit vector and set size of hash functions
+	/// @param m The number of cells
+	/// @param k The number of hash functions
+	BloomFilter(uint64_t m, uint8_t k) : bitVector(m, false)
+	{
+		this->k = k;
+	}
+	
+	
+	/// Adds an element to the Bloom filter
+	/// @param key The element to insert 
+	void insert(const std::string& key) 
+	{
+		insert(reinterpret_cast<const uint8_t*>(key.data()),key.size());
+	}
+	
 
+	/// Check if element exist in Bloom filter
+	/// @param key The element to check
 	bool check(const std::string& key) const
 	{
-		return check(reinterpret_cast<const unsigned char*>(key.c_str()),key.size());
+		return check(reinterpret_cast<const uint8_t*>(key.c_str()),key.size());
 	}
-
 };
 
 #endif
