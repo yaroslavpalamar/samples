@@ -1,6 +1,7 @@
 #include <iostream>
 #include "bloomFilterTask.hpp"
 #include <fstream>
+#include <vector>
 
 template <class T, class Allocator,
           template <class,class> class Container>
@@ -55,8 +56,8 @@ int checkIfContains (BloomFilter& filter, std::vector<std::string>& words, std::
 	return 1;
 }
 
-bool bloomFilterTest() {
-	BloomFilter filter(33548945, 23);
+bool bloomFilterTest(const int BF_BIT_VEC_SIZE, const int HASH_NUM) {
+	BloomFilter filter(BF_BIT_VEC_SIZE, HASH_NUM);
 
 	std::vector<std::string> wordsInFilter;
 	std::string inputFile = "h1.txt";
@@ -86,7 +87,9 @@ bool bloomFilterTest() {
 
 int main()
 {
-	if (!bloomFilterTest()) {
+	const int HASH_NUM = 23;
+	const int BF_BIT_VEC_SIZE = 33548945;
+	if (!bloomFilterTest(BF_BIT_VEC_SIZE, HASH_NUM)) {
 		return 1;
 	}
 

@@ -1,8 +1,6 @@
 #ifndef INCLUDE_BLOOM_FILTER_HPP
 #define INCLUDE_BLOOM_FILTER_HPP
 
-#include <vector>
-#include <array>
 #include "bloomFilterTask.hpp"
 #include "hashGen.hpp"
 #include "bitVector.hpp"
