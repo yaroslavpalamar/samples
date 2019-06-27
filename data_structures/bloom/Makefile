@@ -8,11 +8,11 @@ OPTIONS          = -pedantic-errors -ansi -Wall -std=c++11 -Wextra -Werror -Wno-
 LINKER_OPT       = -L/usr/lib  $(LIB_HASH)  -lstdc++ -lm 
  
 BUILD_LIST+=bloomFilter
-#BUILD_LIST+=bloomFilterTask
+BUILD_LIST+=bloomFilterTask
 
 all: $(BUILD_LIST)
 
-$(BUILD_LIST) : %: %.cpp bloomFilter.hpp 
+$(BUILD_LIST) : %: %.cpp bloomFilter.hpp bloomFilterTask.hpp
 	$(COMPILER) $(OPTIONS) -o $@ $@.cpp $(LINKER_OPT)
 
 strip_bin :
