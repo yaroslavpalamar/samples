@@ -38,6 +38,15 @@ public:
 		this->array = new_internal_array;
 	}
 	
+	//TODO:	
+	/// As for required method new I am not clearly understand what I need to do.
+	/// I decided to not overload new operator and juxt create method new1.
+	/// @param  {const size_t&} size The new capacity.
+	/// @return {void}
+	void new1 (const size_t& size) {
+		this->resize(size);
+	}
+	
 	/// Provides the value of bit at the given position.
 	/// @param  {const size_t&} pos The position within the vector.
 	/// @return {bool}              The success of the look up.

@@ -49,7 +49,11 @@ public:
 	/// @param m The number of cells
 	/// @param k The number of hash functions
 	explicit BloomFilter(uint64_t m, uint8_t k) {
-		bitVector.resize(m);
+		// TODO:
+		// as for required method new(int vec_size) described in task 
+		// description I am not clearly understand, should I overload operator new 
+		// or it can be other name like resize or just init it in constructor.
+		bitVector.new1(m);
 		std::cout << "Size on creation: " << bitVector.size() << "\n";
 		try {
 			bitVector.set_bit(m, true);
