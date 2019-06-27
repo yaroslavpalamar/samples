@@ -89,9 +89,23 @@ bool loadWords(std::vector<std::string>& wordList, std::string& fileName)
 }
 
 
-/*
-	return false in case if file loading not finished
-*/
+int checkIfContains (BloomFilter& filter, std::vector<std::string>& words, std::string& file, bool err) {
+	std::string msg = "BF contains: ";
+	if (!err)
+		msg = "BF false contains: ";
+		
+	if (!loadWords(words, file)) {   
+		return 0;
+	}
+	int size = words.size();
+	for (int i = 0; i < size; ++i) {
+		if (filter.check(words[i])) {
+			std::cout << msg << words[i] << std::endl;
+		}
+	}
+	return 1;
+}
+
 bool bloomFilterTest2() {
 	BloomFilter filter(33548945, 23);
 
@@ -108,26 +122,14 @@ bool bloomFilterTest2() {
 
 	std::vector<std::string> wordsToFind;
 	std::string checkFile = "h2.txt";
-	if (!loadWords(wordsToFind, checkFile)) {   
+	if (!checkIfContains(filter ,wordsToFind, checkFile, true)) {   
 		return 0;
-	}
-	int sizeToCheck = wordsToFind.size();
-	for (int i = 0; i < sizeToCheck; ++i) {
-		if (filter.check(wordsToFind[i])) {
-			std::cout << "BF contains: " << wordsToFind[i] << std::endl;
-		}
 	}
 
 	std::vector<std::string> falseWords;
 	std::string falseWordsFile = "random-list.txt";
-	if (!loadWords(falseWords, falseWordsFile)) {   
+	if (!checkIfContains(filter, falseWords, falseWordsFile, false)) {   
 		return 0;
-	}
-	int sizeFalseWords = falseWords.size();
-	for (int i = 0; i < sizeFalseWords; ++i) {
-		if (filter.check(falseWords[i])) {
-			std::cout << "BF false contains: " << falseWords[i] << std::endl;
-		}
 	}
 
 	return 1;
