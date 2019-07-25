@@ -18,7 +18,7 @@ typedef pair<int, int> p;
 
 class Stack {
 	int cnt;
-	priority_queue<pair<int,int>> pq;
+	priority_queue< pair<int,int> > pq;
 public:
 	Stack()
 	{
@@ -54,6 +54,7 @@ main (int argc, char** argv)
 {
 	cout << "push 1,2,3 to stack" << endl;
 	Stack s;
+	s.push(5);
 	s.push(1);
 	s.push(2);
 	s.push(3);

@@ -12,6 +12,12 @@ void memCpy(void* dest, const void *src, const size_t n)
 		cDest[i] = cSrc[i];
 }
 
+void strcopy (char* dest, const char* src)
+{
+	while ((*dest++ = *src++) != '\0');
+}
+
+
 //memmove used just when data overlaps and corrupt buffer 
 //so for memmove need to use tmp buffer
 void memMove(void* dest, const void *src, const size_t n)
@@ -48,7 +54,16 @@ int main (int argc, char** argv)
 	memMove(mSrc+4, mSrc,  strlen(mSrc)+1);
 	//memCpy(mSrc+4, mSrc,  strlen(mSrc)+1);
 	//memmove(mSrc+4, mSrc,  strlen(mSrc)+1);
-	printf("\nMoved array is %s", mSrc);
+	printf("\nMoved array is %s\n", mSrc);
+
+
+	char* testStrSrc = "test string copy";
+	char strDest[100] = {0};
+	
+	strcopy (strDest, testStrSrc);
+	printf("Print result: %s \n", strDest);
+
+
 	return 0;
 }
 
