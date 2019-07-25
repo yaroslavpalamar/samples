@@ -1,0 +1,7 @@
+#Was used next info https://www.afternerd.com/blog/python-http-server
+
+#You can run server with the next command:
+#python3 -m http.server 8080 --bind 127.0.0.1
+
+#Also you can test without browser with nc command:
+printf 'GET / HTTP/1.1\n\n' | nc localhost 8080
