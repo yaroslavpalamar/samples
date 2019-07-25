@@ -1,0 +1,12 @@
+1 run script as
+ python server.py
+2 open second terminal and run next command
+telnet 127.0.0.1 5005
+
+3 open third terminal and listen the port 5005 (in local machine need to listen lo0 interface)
+sudo tcpdump -vv -x -X -s 1500 -i lo0 'port 5005'
+
+4 Also instead of telnet you can send next data ussing nc command
+nc 127.0.0.1 2003
+
+

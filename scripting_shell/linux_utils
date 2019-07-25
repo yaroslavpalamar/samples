@@ -1,0 +1,36 @@
+#!/bin/sh
+
+#send to usb if installed FTDI com->to->USB echo abc > /dev/ttyACM0
+#nc or netcat send somithing to port or open port
+#telnet or ssh
+
+#ping
+#netstat
+#ss
+#netstat -rn
+
+#But netstat cannot be replaced full by ss. Some netstat commands correspond better to ip command.
+#$ netstat -r   replaced by  $ ip route
+#$ netstat -i   replaced by  $ ip -s lin
+#$ netstat -g   replaced by  $ ip maddr.
+#id command to look on which groups I am.
+#df
+#du
+#top
+#ls -rtl
+#groups
+#cat /etc/passwd/ | wc -l   count number of possible users on the system 
+#double grater sign >> to append contents of the file.
+
+
+# tcpdump icmp
+# tcpdump host 1.2.3.4
+# tcpdump src 1.2.3.4
+# tcpdump dst 1.2.3.4
+# tcpdump greater 64  // packets greater then 64 bytes
+# tcpdump less 32
+#tcpdump -vvAls0 | grep 'GET'
+#tcpdump -vvAls0 | grep 'Host:'
+
+# DNS traffic:
+tcpdump -vvAs0 port 5
