@@ -20,6 +20,7 @@ public:
 	virtual ~WidgetFactory() = default;
 	
 	virtual WidgetPtr createWidget() const = 0;
+	//virtual Widget* createWidget() const = 0;
 };
 
 class Gadget final
@@ -31,12 +32,12 @@ public:
 	}
 	~Gadget() = default;
 	
-	int doStaffOnWidgets() const
+	int doStuffOnWidgets() const
 	{
 		auto result = 0;
 		for  (auto i=0; i < 3; ++i) {
 			const auto widget = mFactory.createWidget();
-			result += widget->doStaff();
+			result += widget->doStuff();
 		}
 		return result;
 	}
@@ -51,7 +52,7 @@ public:
 	ConcreteWidget() = default;
 	virtual ~ConcreteWidget() = default;
 
-	virtual int doStaff() override {
+	virtual int doStuff() override {
 		std::random_device rd;
 		std::uniform_int_distribution<> dist;
 		return dist(rd);
@@ -66,7 +67,10 @@ public:
 	virtual ~ConcreteWidgetFactory() = default;
 
 	virtual WidgetPtr createWidget() const override {
+	//virtual Widget* createWidget() const override {
+
 		return std::make_unique<ConcreteWidget>();
+		//return new ConcreteWidget();
 	}
 };
 
@@ -77,7 +81,7 @@ public:
 	TestWidget() = default;
 	virtual ~TestWidget() = default;
 
-	virtual int doStaff() override {
+	virtual int doStuff() override {
 		return 0;
 	}
 };
@@ -90,7 +94,9 @@ public:
 	virtual ~TestWidgetFactory() = default;
 
 	virtual WidgetPtr createWidget() const override {
-		return std::make_unique<ConcreteWidget>();
+	//virtual Widget* createWidget() const override {
+		return std::make_unique<TestWidget>();
+		//return new TestWidget();
 	}
 };
 
@@ -98,9 +104,10 @@ public:
 int 
 main()
 {
-	TestWidgetFactory factory;
+	//TestWidgetFactory factory;
+	ConcreteWidgetFactory factory;
 	Gadget g(factory);  // we can use TestWidgetFactory or ConcreteWidgetFactory and nothing in Gadget changed
-	std::cout << g.doStaffOnWidgets() << "\n";
+	std::cout << g.doStuffOnWidgets() << "\n";
 	return 0;
 }
 
