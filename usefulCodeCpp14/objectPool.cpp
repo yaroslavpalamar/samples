@@ -98,14 +98,11 @@ main()
 		ObjectPool<int> pool;
 		ExecutionTimer<> timer;
 		{
-			//for (auto i = 0; i < 100000; ++i)
-				//delete new int;
 			for (auto i = 0; i < 100000; ++i)
 				pool.destroy(pool.construct());
 		}
 	}
 	{
-		ObjectPool<int> pool;
 		ExecutionTimer<> timer;
 		{
 			for (auto i = 0; i < 100000; ++i)
