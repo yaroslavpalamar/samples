@@ -1,0 +1,12 @@
+testUsr 1 2
+test2 3 4
+vasya 7 8
+petya 9 10
+ivan 3 4
+nazar 8 0
+inna
+jim
+testUsr
+john
+test2
+ivan
