@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# ltrace
+# strace
+
 #send to usb if installed FTDI com->to->USB echo abc > /dev/ttyACM0
 #nc or netcat send somithing to port or open port
 #telnet or ssh
