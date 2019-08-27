@@ -9,7 +9,8 @@
 int main() 
 { 
 	char fixed_str[] = "_________ before underscores is sample of input string from other process..."; 
-	char input_str[100]; 
+	const int BUF_SIZE = 100;
+	char input_str[BUF_SIZE+sizeof(fixed_str)]; //TODO need to fix it
 	pid_t p; 
 
 	int fd1[2]; //two ends of first pipe. Used to send input string from parent
@@ -34,7 +35,7 @@ int main()
 		fprintf(stderr, "fork Failed" ); 
 		return 1; 
 	} else if (p > 0) { //parent process
-		char concat_str[100]; 
+		char concat_str[BUF_SIZE]; 
 
 		close(fd1[0]); // Close reading end of first pipe 
 
@@ -48,15 +49,15 @@ int main()
 		close(fd2[1]); // Close writing end of second pipe 
 
 		// Read string from child, print it and close reading pipe.
-		read(fd2[0], concat_str, 100); 
+		read(fd2[0], concat_str, BUF_SIZE); 
 		printf("Concatenated string: \n%s\n", concat_str); 
 		close(fd2[0]); 
 	} else { //child process
 		close(fd1[1]); // Close writing end of first pipe 
 
 		// Read a string using first pipe 
-		char concat_str[100]; 
-		read(fd1[0], concat_str, 100); 
+		char concat_str[BUF_SIZE]; 
+		read(fd1[0], concat_str, BUF_SIZE); 
 
 		// Concatenate a fixed string with it 
 		int k = strlen(concat_str); 
