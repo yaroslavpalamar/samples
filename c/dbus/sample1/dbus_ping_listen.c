@@ -1,5 +1,5 @@
 #include <glib.h>
-#include <dbus/dbus-glib.h>
+#include <dbus/dbus.h>
 
 static DBusHandlerResult signal_filter 
       (DBusConnection *connection, DBusMessage *message, void *user_data);
@@ -20,10 +20,10 @@ main (int argc, char **argv)
     dbus_error_free (&error);
     return 1;
   }
-  dbus_connection_setup_with_g_main (bus, NULL);
-
+  //dbus_connection_setup_with_g_main (bus, NULL);
+  dbus_bus_get(DBUS_BUS_SESSION, &error);
   /* listening to messages from all objects as no path is specified */
-  dbus_bus_add_match (bus, "type='signal',interface='com.burtonini.dbus.Signal'");
+  dbus_bus_add_match (bus, "type='signal',interface='com.burtonini.dbus.Signal'", &error);
   dbus_connection_add_filter (bus, signal_filter, loop, NULL);
 
   g_main_loop_run (loop);
@@ -38,7 +38,7 @@ signal_filter (DBusConnection *connection, DBusMessage *message, void *user_data
 
   /* A signal from the bus saying we are about to be disconnected */
   if (dbus_message_is_signal 
-        (message, DBUS_INTERFACE_ORG_FREEDESKTOP_LOCAL, "Disconnected")) {
+        (message, DBUS_INTERFACE_LOCAL, "Disconnected")) {
     /* Tell the main loop to quit */
     g_main_loop_quit (loop);
     /* We have handled this message, don't pass it on */
