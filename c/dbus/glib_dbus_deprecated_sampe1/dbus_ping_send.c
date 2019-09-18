@@ -1,6 +1,6 @@
 #include <glib.h>
 #include <dbus/dbus.h>
-
+#include <dbus/dbus-glib-lowlevel.h>
 static gboolean send_ping (DBusConnection *bus);
 
 int
@@ -12,19 +12,10 @@ main (int argc, char **argv)
 
   /* Create a new event loop to run in */
   loop = g_main_loop_new (NULL, FALSE);
-
-/*  g_bus_own_name (G_BUS_TYPE_SESSION,
-		  "com.burtonini.dbus.Signal",
-		  G_OPTION_FLAG_NONE,
-		  NULL,
-		  on_name_acquired,
-		  NULL,
-		  NULL,
-		  NULL);
-*/
   /* Get a connection to the session bus */
   dbus_error_init (&error);
   bus = dbus_bus_get (DBUS_BUS_SESSION, &error);
+ 
   if (!bus) {
     g_warning ("Failed to connect to the D-BUS daemon: %s", error.message);
     dbus_error_free (&error);

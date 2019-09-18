@@ -1,6 +1,6 @@
 #include <glib.h>
 #include <dbus/dbus.h>
-
+#include <dbus/dbus-glib-lowlevel.h>
 static DBusHandlerResult signal_filter 
       (DBusConnection *connection, DBusMessage *message, void *user_data);
 
@@ -20,7 +20,7 @@ main (int argc, char **argv)
     dbus_error_free (&error);
     return 1;
   }
-  //dbus_connection_setup_with_g_main (bus, NULL);
+  dbus_connection_setup_with_g_main (bus, NULL);
   dbus_bus_get(DBUS_BUS_SESSION, &error);
   /* listening to messages from all objects as no path is specified */
   dbus_bus_add_match (bus, "type='signal',interface='com.burtonini.dbus.Signal'", &error);
