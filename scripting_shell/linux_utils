@@ -37,3 +37,7 @@
 
 # DNS traffic:
 tcpdump -vvAs0 port 5
+tcpdump port 443 -i usb1
+tcpdump -nnvvv port 443 -i usb1 and "tcp[tcpflags] & tcp-fin != 0"
+free -m
+top
