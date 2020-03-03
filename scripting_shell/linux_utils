@@ -39,5 +39,9 @@
 tcpdump -vvAs0 port 5
 tcpdump port 443 -i usb1
 tcpdump -nnvvv port 443 -i usb1 and "tcp[tcpflags] & tcp-fin != 0"
+tcpdump -nnvvv host google.com -i usb1 and "tcp[tcpflags] & (tcp-fin|tcp-rst) != 0"
+
+ping google.com | while read line; do echo `date` - $line; done
+
 free -m
 top
